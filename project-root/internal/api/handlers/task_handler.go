@@ -174,18 +174,6 @@ func (h *taskHandler) UploadFile(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error})
 		return
 	}
-	// taskID, err := strconv.ParseUint(c.Request.FormValue("taskID"), 10, 64)
-	// if err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "invalid taskID"})
-	// 	return
-	// }
-
-	// //find task
-	// task, _ := h.taskService.FindByID(uint(taskID))
-	// if task == nil {
-	// 	c.JSON(http.StatusNotFound, gin.H{"errors": "Task id not found"})
-	// 	return
-	// }
 
 	//handle file upload
 	file, err := c.FormFile("file")
