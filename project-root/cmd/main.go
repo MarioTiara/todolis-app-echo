@@ -29,6 +29,7 @@ func main() {
 
 	v1.GET("/", handler.Hello)
 	v1.POST("/tasks", handler.PostTaskHandler)
+	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
 
 	if err := e.Start(":8080"); err != nil {
 		panic("failed to start the server")

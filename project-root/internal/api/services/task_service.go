@@ -28,7 +28,9 @@ func (s *task_service) FindAll() ([]models.Task, error) {
 }
 
 func (s *task_service) FindByID(ID uint) (*models.Task, error) {
+	s.uow.Begin()
 	task, err := s.uow.TaskRepository().FindByID(ID)
+	s.uow.Commit()
 	return &task, err
 }
 
