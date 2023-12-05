@@ -39,8 +39,9 @@ func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
 	for _, task := range task.Children {
 		parentTask.Children = append(parentTask.Children, convertRequestToTaskEntity(task))
 	}
-
+	s.uow.Begin()
 	createdTask, err := s.uow.TaskRepository().Create(parentTask)
+	s.uow.Commit()
 	return createdTask, err
 }
 

@@ -26,5 +26,9 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
 	}
 
-	return c.JSON(201, taskRequest)
+	task, err := h.taskService.Create(taskRequest)
+	if err != nil {
+		return c.JSON(500, map[string]interface{}{"error": "Failed to create task"})
+	}
+	return c.JSON(201, task.ID)
 }
