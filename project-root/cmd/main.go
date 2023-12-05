@@ -1,7 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	"github.com/labstack/echo/v4"
+	"github.com/marioTiara/todolistapp/internal/api/handlers"
+	"github.com/marioTiara/todolistapp/internal/api/services"
+	"github.com/marioTiara/todolistapp/internal/repository"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
 
 func main() {
-	fmt.Println("Hello, Golang!")
+	dsn := "host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	uow := repository.NewUnitOfWork(db)
+	service := services.NewTaskService(uow)
+	handler := handlers.NewHandlers(service)
+
+	e := echo.New()
+	v1 := e.Group("v1")
+
+	v1.GET("/", handler.Hello)
+	v1.POST("/tasks", handler.PostTaskHandler)
+
+	if err := e.Start(":8080"); err != nil {
+		panic("failed to start the server")
+	}
 }
