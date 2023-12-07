@@ -28,6 +28,7 @@ func main() {
 	v1 := e.Group("v1")
 
 	v1.GET("/", handler.Hello)
+	v1.GET("/tasks", handler.GetAllList)
 	v1.POST("/tasks", handler.PostTaskHandler)
 	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
 

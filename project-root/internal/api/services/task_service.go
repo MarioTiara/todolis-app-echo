@@ -11,7 +11,7 @@ type TaskService interface {
 	FindByID(ID uint) (*models.Task, error)
 	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
-	FilterTask(title, description string, page, limit int) ([]models.Task, error)
+	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
 }
 
 type task_service struct {
@@ -29,7 +29,7 @@ func (s *task_service) FindAll() ([]models.Task, error) {
 
 func (s *task_service) FindByID(ID uint) (*models.Task, error) {
 	s.uow.Begin()
-	task, err := s.uow.TaskRepository().FindByID(ID)
+	task, err := s.uow.TaskRepository().FindByID(ID, false)
 	s.uow.Commit()
 	return &task, err
 }
@@ -52,11 +52,26 @@ func (s *task_service) CreateSubTask(parentID uint, request dtos.AddTaskRequest)
 	return s.uow.TaskRepository().CreateSubTask(subTask)
 }
 
-func (s *task_service) FilterTask(title, description string, page, limit int) ([]models.Task, error) {
-	return s.uow.TaskRepository().FilterByTitleAndDescription(title, description, page, limit)
+func (s *task_service) FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error) {
+	s.uow.Begin()
+	task, err := s.uow.TaskRepository().FilterByTitleAndDescription(title, description, page, limit, preload)
+	s.uow.Commit()
+	filterdData := removeSubtaskFromParentList(task)
+	return filterdData, err
 }
 
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
 	newtask := models.Task{Title: request.Title, Descryption: request.Descryption}
 	return newtask
+}
+
+func removeSubtaskFromParentList(tasks []models.Task) []models.Task {
+	var filteredData []models.Task
+	for _, task := range tasks {
+		if task.ParentID == nil {
+			filteredData = append(filteredData, task)
+		}
+	}
+
+	return filteredData
 }

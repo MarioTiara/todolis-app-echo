@@ -7,10 +7,10 @@ import (
 
 type TaskRepository interface {
 	FindAll() ([]models.Task, error)
-	FindByID(ID uint) (models.Task, error)
+	FindByID(ID uint, preload bool) (models.Task, error)
 	Create(task models.Task) (models.Task, error)
 	CreateSubTask(task models.Task) (models.Task, error)
-	FilterByTitleAndDescription(title, description string, page, limit int) ([]models.Task, error)
+	FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error)
 }
 
 type task_repository struct {
@@ -28,9 +28,14 @@ func (r *task_repository) FindAll() ([]models.Task, error) {
 	return tasks, err
 }
 
-func (r *task_repository) FindByID(ID uint) (models.Task, error) {
+func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 	var parentTaskWithChildren models.Task
-	err := r.db.Preload("Children").First(&parentTaskWithChildren, ID).Error
+	var err error
+	if preload {
+		err = r.db.Preload("Children").First(&parentTaskWithChildren, ID).Error
+	} else {
+		err = r.db.First(&parentTaskWithChildren, ID).Error
+	}
 
 	return parentTaskWithChildren, err
 }
@@ -40,7 +45,7 @@ func (r *task_repository) Create(task models.Task) (models.Task, error) {
 	return task, err
 }
 
-func (r *task_repository) FilterByTitleAndDescription(title, description string, page, limit int) ([]models.Task, error) {
+func (r *task_repository) FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error) {
 	var tasks []models.Task
 	query := r.db.Model(&models.Task{})
 
@@ -52,7 +57,14 @@ func (r *task_repository) FilterByTitleAndDescription(title, description string,
 	}
 
 	offset := (page - 1) * limit
-	if err := query.Preload("Children").Offset(offset).Limit(limit).Find(&tasks).Error; err != nil {
+
+	if preload {
+		query = query.Preload("Children")
+	}
+	if !preload {
+		query = query.Where("parent_id IS NULL")
+	}
+	if err := query.Offset(offset).Limit(limit).Find(&tasks).Error; err != nil {
 		return nil, err
 	}
 
