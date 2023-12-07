@@ -23,6 +23,7 @@ func (h *handlers) Hello(c echo.Context) error {
 	return c.String(http.StatusOK, "hello world")
 }
 
+// 5.[METHOD:POST] Menambahkan data list.
 func (h *handlers) PostTaskHandler(c echo.Context) error {
 	var taskRequest dtos.AddTaskRequest
 	if err := c.Bind(&taskRequest); err != nil {
@@ -37,6 +38,8 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 }
 
 // 2. [METHOD:GET] Menampilkan data detail list by list id.
+// 4. [METHOD:GET] Menampilkan data detail sub list by sub list id.
+
 func (h *handlers) GetTaskByIDHandler(c echo.Context) error {
 
 	strID := c.Param("id")
@@ -98,7 +101,7 @@ func (h *handlers) GetAllList(c echo.Context) error {
 
 }
 
-// [METHOD:GET] Menampilkan data all sub list by list id ( include pagination, filter[Search By: title, description] )
+// 3.[METHOD:GET] Menampilkan data all sub list by list id ( include pagination, filter[Search By: title, description] )
 func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 	strID := c.Param("parentID")
 	parentID, err := strconv.ParseUint(strID, 10, 64)
@@ -128,5 +131,3 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, subTasks)
 }
-
-//[METHOD:GET] Menampilkan data detail sub list by sub list id.

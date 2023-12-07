@@ -10,6 +10,7 @@ type TaskService interface {
 	FindAll() ([]models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
 	FindByID(ID uint, preload bool) (*models.Task, error)
+	//FindSubTaskBySubID(subListID uint) (models.Task, error)
 	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
@@ -67,6 +68,10 @@ func (s *task_service) FilterTask(title, description string, page, limit int, pr
 	filterdData := removeSubtaskFromParentList(task)
 	return filterdData, err
 }
+
+// func (s *task_service) FindSubTaskBySubID(subListID uint) (models.Task, error){
+
+// }
 
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
 	newtask := models.Task{Title: request.Title, Descryption: request.Descryption}
