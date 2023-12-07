@@ -5,17 +5,19 @@ dropdb:
 	docker exec -it postgres12 dropdb todolistwebapi
 
 migration_new:
-	migrate create -ext sql -dir database/migrations -seq todolist_schema
+	migrate create -ext sql -dir project-root/migrations -seq todolist_schema
 
 migration_up:
-	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" -verbose up
+	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" -verbose up
 
 migration_down:
-	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" -verbose down
+	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" -verbose down
+
 migration_status:
-	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" status
+	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" status
+
 migration_fix:
-	migrate -path database/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" force 3
+	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" force 3
 
 atlas-migration:
 	atlas migrate diff --env gorm 

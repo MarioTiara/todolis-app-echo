@@ -9,7 +9,6 @@ type TaskRepository interface {
 	FindAll() ([]models.Task, error)
 	FindByID(ID uint, preload bool) (models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error)
-	//FindSubTaskBySubID(subListID uint) (models.Task, error)
 	Create(task models.Task) (models.Task, error)
 	CreateSubTask(task models.Task) (models.Task, error)
 	FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error)
