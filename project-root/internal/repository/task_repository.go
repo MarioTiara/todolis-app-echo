@@ -8,6 +8,7 @@ import (
 type TaskRepository interface {
 	FindAll() ([]models.Task, error)
 	FindByID(ID uint, preload bool) (models.Task, error)
+	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error)
 	Create(task models.Task) (models.Task, error)
 	CreateSubTask(task models.Task) (models.Task, error)
 	FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error)
@@ -38,6 +39,27 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 	}
 
 	return parentTaskWithChildren, err
+}
+
+func (r *task_repository) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error) {
+	var Subtasks []models.Task
+	query := r.db.Model(&models.Task{}).Where("parent_id= ?", parentID)
+
+	if title != "" {
+		query = query.Where("title LIKE ?", "%"+title+"%")
+	}
+	if description != "" {
+		query = query.Where("description LIKE ?", "%"+description+"%")
+	}
+
+	offset := (page - 1) * limit
+
+	if err := query.Offset(offset).Limit(limit).Find(&Subtasks).Error; err != nil {
+		return nil, err
+	}
+
+	return Subtasks, nil
+
 }
 
 func (r *task_repository) Create(task models.Task) (models.Task, error) {

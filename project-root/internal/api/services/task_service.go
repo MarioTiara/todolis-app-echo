@@ -8,7 +8,8 @@ import (
 
 type TaskService interface {
 	FindAll() ([]models.Task, error)
-	FindByID(ID uint) (*models.Task, error)
+	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
+	FindByID(ID uint, preload bool) (*models.Task, error)
 	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
@@ -27,11 +28,18 @@ func (s *task_service) FindAll() ([]models.Task, error) {
 	return tasks, err
 }
 
-func (s *task_service) FindByID(ID uint) (*models.Task, error) {
+func (s *task_service) FindByID(ID uint, preload bool) (*models.Task, error) {
 	s.uow.Begin()
-	task, err := s.uow.TaskRepository().FindByID(ID, false)
+	task, err := s.uow.TaskRepository().FindByID(ID, preload)
 	s.uow.Commit()
 	return &task, err
+}
+
+func (s *task_service) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error) {
+	s.uow.Begin()
+	subtasks, err := s.uow.TaskRepository().FindSubTaskByTaskID(title, description, parentID, page, limit)
+	s.uow.Commit()
+	return &subtasks, err
 }
 
 func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
