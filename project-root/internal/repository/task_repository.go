@@ -1,12 +1,15 @@
 package repository
 
 import (
+	"time"
+
 	"github.com/marioTiara/todolistapp/internal/api/models"
 	"gorm.io/gorm"
 )
 
 type TaskRepository interface {
 	SoftDelete(id uint) error
+	Update(task models.Task) (models.Task, error)
 	FindAll() ([]models.Task, error)
 	FindByID(ID uint, preload bool) (models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error)
@@ -48,7 +51,7 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 
 func (r *task_repository) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error) {
 	var Subtasks []models.Task
-	query := r.db.Model(&models.Task{}).Where("parent_id= ?", parentID)
+	query := r.db.Model(&models.Task{}).Where("is_active = ?", true).Where("parent_id= ?", parentID)
 
 	if title != "" {
 		query = query.Where("title LIKE ?", "%"+title+"%")
@@ -109,4 +112,15 @@ func (r *task_repository) SoftDelete(id uint) error {
 	r.db.Find(&taskTageted, id)
 	err := r.db.Model(&taskTageted).Update("is_active", false).Error
 	return err
+}
+
+func (r *task_repository) Update(task models.Task) (models.Task, error) {
+	oldData, err := r.FindByID(task.ID, false)
+
+	oldData.Title = task.Title
+	oldData.Description = task.Description
+	oldData.UpdatedAt = time.Now().UTC()
+	err = r.db.Updates(oldData).Error
+
+	return oldData, err
 }

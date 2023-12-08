@@ -15,6 +15,7 @@ type TaskService interface {
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
 	Delete(id uint) error
+	Update(task dtos.AddTaskRequest, id uint) (models.Task, error)
 }
 
 type task_service struct {
@@ -77,6 +78,17 @@ func (s *task_service) Delete(id uint) error {
 	return err
 }
 
+func (s *task_service) Update(task dtos.AddTaskRequest, id uint) (models.Task, error) {
+	newtask := models.Task{
+		ID:          id,
+		Title:       task.Title,
+		Description: task.Description,
+	}
+	s.uow.Begin()
+	updatedTask, err := s.uow.TaskRepository().Update(newtask)
+	s.uow.Commit()
+	return updatedTask, err
+}
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
 	newtask := models.Task{Title: request.Title, Description: request.Description}
 	return newtask

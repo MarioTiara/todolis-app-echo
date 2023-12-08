@@ -31,6 +31,7 @@ func main() {
 	v1.GET("/tasks", handler.GetAllList)
 	v1.POST("/tasks", handler.PostTaskHandler)
 	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
+	v1.PUT("/tasks/:id", handler.Update)
 	v1.DELETE("/tasks/:id", handler.Delete)
 	v1.GET("/subTask/:parentID", handler.GetAllSubListByParentID)
 
