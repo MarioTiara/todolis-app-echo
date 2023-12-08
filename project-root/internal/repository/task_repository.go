@@ -34,9 +34,9 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 	var parentTaskWithChildren models.Task
 	var err error
 	if preload {
-		err = r.db.Preload("Children").First(&parentTaskWithChildren, ID).Error
+		err = r.db.Where("is_active= ?", true).Preload("Children").First(&parentTaskWithChildren, ID).Error
 	} else {
-		err = r.db.First(&parentTaskWithChildren, ID).Where("is_active = true").Error
+		err = r.db.Where("is_active= ?", true).First(&parentTaskWithChildren, ID).Error
 	}
 
 	return parentTaskWithChildren, err
