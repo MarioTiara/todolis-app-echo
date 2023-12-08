@@ -14,6 +14,7 @@ type TaskService interface {
 	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
+	Delete(id uint) error
 }
 
 type task_service struct {
@@ -57,7 +58,7 @@ func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
 }
 
 func (s *task_service) CreateSubTask(parentID uint, request dtos.AddTaskRequest) (models.Task, error) {
-	var subTask = models.Task{Title: request.Title, Descryption: request.Descryption, ParentID: &parentID}
+	var subTask = models.Task{Title: request.Title, Description: request.Description, ParentID: &parentID}
 	return s.uow.TaskRepository().CreateSubTask(subTask)
 }
 
@@ -69,12 +70,15 @@ func (s *task_service) FilterTask(title, description string, page, limit int, pr
 	return filterdData, err
 }
 
-// func (s *task_service) FindSubTaskBySubID(subListID uint) (models.Task, error){
-
-// }
+func (s *task_service) Delete(id uint) error {
+	s.uow.Begin()
+	err := s.uow.TaskRepository().SoftDelete(id)
+	s.uow.Commit()
+	return err
+}
 
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
-	newtask := models.Task{Title: request.Title, Descryption: request.Descryption}
+	newtask := models.Task{Title: request.Title, Description: request.Description}
 	return newtask
 }
 

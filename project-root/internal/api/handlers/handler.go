@@ -131,3 +131,19 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, subTasks)
 }
+
+// [METHOD:DELETE] Menghapus data list/sub list.
+func (h *handlers) Delete(c echo.Context) error {
+	strID := c.Param("id")
+	id, err := strconv.ParseUint(strID, 10, 64)
+	if err != nil {
+		return c.JSON(400, map[string]interface{}{"error": "Invalid Input"})
+	}
+
+	err = h.taskService.Delete(uint(id))
+	if err != nil {
+		return c.JSON(500, map[string]interface{}{"error": err})
+	}
+	return c.NoContent(http.StatusNoContent)
+
+}

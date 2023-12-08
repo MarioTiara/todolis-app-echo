@@ -6,6 +6,7 @@ import (
 )
 
 type TaskRepository interface {
+	SoftDelete(id uint) error
 	FindAll() ([]models.Task, error)
 	FindByID(ID uint, preload bool) (models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error)
@@ -35,7 +36,7 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 	if preload {
 		err = r.db.Preload("Children").First(&parentTaskWithChildren, ID).Error
 	} else {
-		err = r.db.First(&parentTaskWithChildren, ID).Error
+		err = r.db.First(&parentTaskWithChildren, ID).Where("is_active = true").Error
 	}
 
 	return parentTaskWithChildren, err
@@ -96,4 +97,12 @@ func (r *task_repository) FilterByTitleAndDescription(title, description string,
 func (r *task_repository) CreateSubTask(task models.Task) (models.Task, error) {
 	err := r.db.Create(&task).Error
 	return task, err
+}
+
+func (r *task_repository) SoftDelete(id uint) error {
+	var taskTageted models.Task
+
+	r.db.Find(&taskTageted, id)
+	err := r.db.Model(&taskTageted).Update("is_active", false).Error
+	return err
 }
