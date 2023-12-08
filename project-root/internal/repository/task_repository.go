@@ -77,7 +77,7 @@ func (r *task_repository) Create(task models.Task) (models.Task, error) {
 
 func (r *task_repository) FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error) {
 	var tasks []models.Task
-	query := r.db.Model(&models.Task{})
+	query := r.db.Model(&models.Task{}).Where("is_active = ?", true)
 
 	if title != "" {
 		query = query.Where("title LIKE ?", "%"+title+"%")
