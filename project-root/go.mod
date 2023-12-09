@@ -59,6 +59,7 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/labstack/echo v3.3.10+incompatible
 	github.com/spf13/viper v1.18.1
 	gorm.io/driver/postgres v1.5.4
 )

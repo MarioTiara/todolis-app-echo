@@ -11,14 +11,12 @@ import (
 
 func main() {
 	configuration, _ := config.LoadConfig("./config")
-	postgress := database.NewPostGressDB(configuration.DbSource)
+	postgress := database.NewPostGressDB("host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable")
 	store := storages.NewLocalStoarge("uploads")
 	uow := repository.NewUnitOfWork(postgress.GetDB())
 	service := services.NewTaskService(uow, store)
 
 	server, _ := server.NewServer(configuration, service)
-	err := server.Start()
-	if err != nil {
-		panic("failed to start the server")
-	}
+	server.Start()
+
 }

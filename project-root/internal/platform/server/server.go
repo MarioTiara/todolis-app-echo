@@ -20,9 +20,12 @@ func NewServer(config config.Config, service services.TaskService) (*Server, err
 	return server, nil
 }
 
-func (server *Server) Start() error {
+func (server *Server) Start() {
 	e := echo.New()
 	routes.SetRoutes(e, server.service)
-	err := e.Start(server.config.ServerAddress)
-	return err
+	// err := e.Start(server.config.ServerAddress)
+	// return err
+	if err := e.Start(":8080"); err != nil {
+		panic("failed to start the server")
+	}
 }

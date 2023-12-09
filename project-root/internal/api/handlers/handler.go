@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -38,6 +39,7 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
 	}
 
+	fmt.Println(taskRequest)
 	task, err := h.taskService.Create(taskRequest)
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": "Failed to create task"})
@@ -47,7 +49,6 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 
 // 2. [METHOD:GET] Menampilkan data detail list by list id.
 // 4. [METHOD:GET] Menampilkan data detail sub list by sub list id.
-
 func (h *handlers) GetTaskByIDHandler(c echo.Context) error {
 
 	strID := c.Param("id")
