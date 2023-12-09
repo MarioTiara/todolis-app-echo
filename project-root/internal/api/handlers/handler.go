@@ -31,7 +31,7 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 	isMultipart := isMultipartRequest(contentType)
 
 	if isMultipart {
-		h.HandleMultipleFileUpload(c)
+		return h.HandleMultipleFileUpload(c)
 	}
 	var taskRequest dtos.AddTaskRequest
 	if err := c.Bind(&taskRequest); err != nil {
@@ -153,7 +153,6 @@ func (h *handlers) Delete(c echo.Context) error {
 		return c.JSON(500, map[string]interface{}{"error": err})
 	}
 	return c.NoContent(http.StatusNoContent)
-
 }
 
 // [METHOD:POST/PUT] Mengubah data list/sub list dengan kritera input diatas.

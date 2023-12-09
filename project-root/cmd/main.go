@@ -21,7 +21,7 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	store := storages.NewLocalStoarge("/storages")
+	store := storages.NewLocalStoarge("uploads")
 	uow := repository.NewUnitOfWork(db)
 	service := services.NewTaskService(uow, store)
 	handler := handlers.NewHandlers(service)
