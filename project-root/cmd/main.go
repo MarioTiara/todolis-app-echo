@@ -3,26 +3,27 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/labstack/echo/v4"
+	"github.com/marioTiara/todolistapp/config"
 	"github.com/marioTiara/todolistapp/internal/api/handlers"
 	"github.com/marioTiara/todolistapp/internal/api/services"
+	"github.com/marioTiara/todolistapp/internal/platform/database"
 	"github.com/marioTiara/todolistapp/internal/platform/storages"
 	"github.com/marioTiara/todolistapp/internal/repository"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 func main() {
-	dsn := "host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	// dsn := "host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable"
+	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+	configuration, _ := config.LoadConfig("./config")
+	postgress := database.NewPostGressDB(configuration.DbSource)
 	store := storages.NewLocalStoarge("uploads")
-	uow := repository.NewUnitOfWork(db)
+	uow := repository.NewUnitOfWork(postgress.GetDB())
 	service := services.NewTaskService(uow, store)
 	handler := handlers.NewHandlers(service)
 

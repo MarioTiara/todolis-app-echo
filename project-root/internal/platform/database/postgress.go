@@ -12,8 +12,7 @@ type postgress struct {
 	db *gorm.DB
 }
 
-func NewPostGressDB() *postgress {
-	dsn := "host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable"
+func NewPostGressDB(dsn string) *postgress {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err)
@@ -21,4 +20,8 @@ func NewPostGressDB() *postgress {
 	}
 
 	return &postgress{db: db}
+}
+
+func (p *postgress) GetDB() *gorm.DB {
+	return p.db
 }
