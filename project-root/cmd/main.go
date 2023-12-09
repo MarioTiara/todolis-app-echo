@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/handlers"
 	"github.com/marioTiara/todolistapp/internal/api/services"
+	"github.com/marioTiara/todolistapp/internal/platform/storages"
 	"github.com/marioTiara/todolistapp/internal/repository"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -19,14 +21,14 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-
+	store := storages.NewLocalStoarge("/storages")
 	uow := repository.NewUnitOfWork(db)
-	service := services.NewTaskService(uow)
+	service := services.NewTaskService(uow, store)
 	handler := handlers.NewHandlers(service)
 
 	e := echo.New()
 	v1 := e.Group("v1")
-
+	e.POST("/upload", handleUpload)
 	v1.GET("/", handler.Hello)
 	v1.GET("/tasks", handler.GetAllList)
 	v1.POST("/tasks", handler.PostTaskHandler)
@@ -38,4 +40,26 @@ func main() {
 	if err := e.Start(":8080"); err != nil {
 		panic("failed to start the server")
 	}
+}
+
+type RequestData struct {
+	Name string `json:"name"`
+}
+
+func handleUpload(c echo.Context) error {
+	// Parse JSON body
+	var requestData RequestData
+	if err := c.Bind(&requestData); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": "Invalid JSON body"})
+	}
+
+	// Get the file from the request
+	file, err := c.FormFile("file")
+	if err != nil {
+		return err
+	}
+
+	fileName, _ := storages.NewLocalStoarge("uploads").SaveFile(file)
+
+	return c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully", fileName))
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
+	"github.com/marioTiara/todolistapp/internal/api/models"
 	"github.com/marioTiara/todolistapp/internal/api/services"
 	"gorm.io/gorm"
 )
@@ -25,6 +26,13 @@ func (h *handlers) Hello(c echo.Context) error {
 
 // 5.[METHOD:POST] Menambahkan data list.
 func (h *handlers) PostTaskHandler(c echo.Context) error {
+
+	contentType := c.Request().Header.Get("Content-Type")
+	isMultipart := isMultipartRequest(contentType)
+
+	if isMultipart {
+		h.HandleMultipleFileUpload(c)
+	}
 	var taskRequest dtos.AddTaskRequest
 	if err := c.Bind(&taskRequest); err != nil {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
@@ -168,4 +176,26 @@ func (h *handlers) Update(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, updateTask)
 
+}
+
+func (h *handlers) HandleMultipleFileUpload(c echo.Context) error {
+	taskID, _ := strconv.ParseUint(c.FormValue("taskID"), 10, 64)
+	form, err := c.MultipartForm()
+	var filesDetail []models.Files
+	if err != nil {
+		return c.JSON(400, map[string]interface{}{"error": "file upload failed"})
+	}
+
+	files := form.File["files"]
+
+	//Iterate the files each uploaded file
+	for _, file := range files {
+		data, _ := h.taskService.SaveFile(uint(taskID), file)
+		filesDetail = append(filesDetail, *data)
+	}
+
+	return c.JSON(http.StatusOK, filesDetail)
+}
+func isMultipartRequest(contentType string) bool {
+	return len(contentType) >= len("multipart/form-data") && contentType[:len("multipart/form-data")] == "multipart/form-data"
 }

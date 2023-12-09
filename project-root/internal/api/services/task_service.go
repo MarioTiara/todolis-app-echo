@@ -1,16 +1,19 @@
 package services
 
 import (
+	"mime/multipart"
+
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapp/internal/platform/storages"
 	"github.com/marioTiara/todolistapp/internal/repository"
 )
 
 type TaskService interface {
+	SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error)
 	FindAll() ([]models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
 	FindByID(ID uint, preload bool) (*models.Task, error)
-	//FindSubTaskBySubID(subListID uint) (models.Task, error)
 	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
@@ -19,11 +22,12 @@ type TaskService interface {
 }
 
 type task_service struct {
-	uow repository.UnitOfWork
+	uow   repository.UnitOfWork
+	store storages.Storage
 }
 
-func NewTaskService(uow repository.UnitOfWork) TaskService {
-	return &task_service{uow}
+func NewTaskService(uow repository.UnitOfWork, store storages.Storage) TaskService {
+	return &task_service{uow, store}
 }
 
 func (s *task_service) FindAll() ([]models.Task, error) {
@@ -88,6 +92,17 @@ func (s *task_service) Update(task dtos.AddTaskRequest, id uint) (models.Task, e
 	updatedTask, err := s.uow.TaskRepository().Update(newtask)
 	s.uow.Commit()
 	return updatedTask, err
+}
+
+func (s *task_service) SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error) {
+	fileName, err := s.store.SaveFile(file)
+	fileDetail := models.Files{}
+	if err != nil {
+		return &fileDetail, err
+	}
+	fileDetail.FileName = fileName
+	return &fileDetail, err
+
 }
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
 	newtask := models.Task{Title: request.Title, Description: request.Description}
