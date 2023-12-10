@@ -1,8 +1,6 @@
 package services
 
 import (
-	"mime/multipart"
-
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
 	"github.com/marioTiara/todolistapp/internal/platform/storages"
@@ -10,7 +8,6 @@ import (
 )
 
 type TaskService interface {
-	SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error)
 	FindAll() ([]models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
 	FindByID(ID uint, preload bool) (*models.Task, error)
@@ -94,22 +91,6 @@ func (s *task_service) Update(task dtos.AddTaskRequest, id uint) (models.Task, e
 	return updatedTask, err
 }
 
-func (s *task_service) SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error) {
-	fileName, err := s.store.SaveFile(file)
-	fileDetail := models.Files{}
-	if err != nil {
-		return &fileDetail, err
-	}
-	fileDetail.FileName = fileName
-	fileDetail.TaskID = uint(taskID)
-
-	s.uow.Begin()
-	savedFile, _ := s.uow.FileRepository().Create(fileDetail)
-	s.uow.Commit()
-
-	return &savedFile, err
-
-}
 func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
 	newtask := models.Task{Title: request.Title, Description: request.Description}
 	return newtask

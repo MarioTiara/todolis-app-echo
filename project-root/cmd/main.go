@@ -14,7 +14,7 @@ func main() {
 	postgress := database.NewPostGressDB("host=localhost user=root password=secret dbname=todolistwebapi port=5432 sslmode=disable")
 	store := storages.NewLocalStoarge("uploads")
 	uow := repository.NewUnitOfWork(postgress.GetDB())
-	service := services.NewTaskService(uow, store)
+	service := services.NewServices(uow, store)
 
 	server, _ := server.NewServer(configuration, service)
 	server.Start()
