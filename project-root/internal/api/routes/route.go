@@ -11,9 +11,15 @@ func SetRoutes(e *echo.Echo, s services.Service) {
 	v1 := e.Group("v1")
 	v1.GET("/", handler.Hello)
 	v1.GET("/tasks", handler.GetAllList)
-	v1.POST("/tasks", handler.PostTaskHandler)
 	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
-	v1.PUT("/tasks/:id", handler.Update)
-	v1.DELETE("/tasks/:id", handler.Delete)
 	v1.GET("/subTask/:parentID", handler.GetAllSubListByParentID)
+	v1.GET("/uploads/get", handler.DownloadFile)
+
+	v1.POST("/tasks", handler.PostTaskHandler)
+	v1.POST("/uploads/add", handler.UploadTaskFilesHandler)
+
+	v1.PUT("/tasks/:id", handler.Update)
+
+	v1.DELETE("/tasks/:id", handler.DeleteTask)
+	v1.DELETE("/uploads/delete/:id", handler.DeleteFile)
 }

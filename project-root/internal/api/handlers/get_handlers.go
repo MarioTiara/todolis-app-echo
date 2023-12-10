@@ -67,7 +67,6 @@ func (h *handlers) GetAllList(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
-
 	return c.JSON(http.StatusOK, task)
 
 }
@@ -99,6 +98,11 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
-
 	return c.JSON(http.StatusOK, subTasks)
+}
+
+func (h *handlers) DownloadFile(c echo.Context) error {
+	fileName := c.QueryParam("fileName")
+	path := h.service.FileService().Download(fileName)
+	return c.Inline(path, fileName)
 }

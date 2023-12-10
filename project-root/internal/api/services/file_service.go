@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"mime/multipart"
 
 	"github.com/marioTiara/todolistapp/internal/api/models"
@@ -14,6 +15,7 @@ type FileService interface {
 	GetByID(fileID uint) (*models.Files, error)
 	DeleteByID(fileID uint) error
 	DeleteByTaskID(taskID uint) error
+	Download(fileName string) string
 }
 
 type files_service struct {
@@ -76,4 +78,10 @@ func (s *files_service) DeleteByTaskID(taskID uint) error {
 	}
 	s.uow.Commit()
 	return err
+}
+
+func (s *files_service) Download(fileName string) string {
+	dir, _ := s.store.LoadFile(fileName)
+	str := fmt.Sprint(dir)
+	return str
 }

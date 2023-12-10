@@ -8,7 +8,7 @@ import (
 )
 
 // [METHOD:DELETE] Menghapus data list/sub list.
-func (h *handlers) Delete(c echo.Context) error {
+func (h *handlers) DeleteTask(c echo.Context) error {
 	strID := c.Param("id")
 	id, err := strconv.ParseUint(strID, 10, 64)
 	if err != nil {
@@ -23,5 +23,19 @@ func (h *handlers) Delete(c echo.Context) error {
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": "Failed to delete files"})
 	}
+	return c.NoContent(http.StatusNoContent)
+}
+
+func (h *handlers) DeleteFile(c echo.Context) error {
+	strID := c.Param("id")
+	id, err := strconv.ParseUint(strID, 10, 64)
+	if err != nil {
+		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
+	}
+	err = h.service.FileService().DeleteByID(uint(id))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": "Failed to delete file"})
+	}
+
 	return c.NoContent(http.StatusNoContent)
 }
