@@ -179,7 +179,20 @@ func (h *handlers) Update(c echo.Context) error {
 }
 
 func (h *handlers) HandleMultipleFileUpload(c echo.Context) error {
-	taskID, _ := strconv.ParseUint(c.FormValue("taskID"), 10, 64)
+	title := c.FormValue("title")
+	if title == "" {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": "invalid paramater"})
+	}
+	description := c.FormValue("description")
+
+	//Create new Task
+	newTask := dtos.AddTaskRequest{Title: title, Description: description}
+	task, err := h.service.TaskService().Create(newTask)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": "failed to create new task"})
+	}
+
+	//Save file
 	form, err := c.MultipartForm()
 	var filesDetail []models.Files
 	if err != nil {
@@ -190,11 +203,12 @@ func (h *handlers) HandleMultipleFileUpload(c echo.Context) error {
 
 	//Iterate the files each uploaded file
 	for _, file := range files {
-		data, _ := h.service.FileService().SaveFile(uint(taskID), file)
+		data, _ := h.service.FileService().SaveFile(uint(task.ID), file)
 		filesDetail = append(filesDetail, *data)
 	}
 
-	return c.JSON(http.StatusOK, filesDetail)
+	task.Files = filesDetail
+	return c.JSON(http.StatusOK, task)
 }
 
 func isMultipartRequest(contentType string) bool {
