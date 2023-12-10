@@ -6,7 +6,7 @@ import (
 	"github.com/marioTiara/todolistapp/internal/api/services"
 )
 
-func SetRoutes(e *echo.Echo, s services.TaskService) {
+func SetRoutes(e *echo.Echo, s services.Service) {
 	handler := handlers.NewHandlers(s)
 	v1 := e.Group("v1")
 	v1.GET("/", handler.Hello)

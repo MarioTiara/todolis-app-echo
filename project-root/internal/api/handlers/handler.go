@@ -14,11 +14,11 @@ import (
 )
 
 type handlers struct {
-	taskService services.TaskService
+	service services.Service
 }
 
-func NewHandlers(taskService services.TaskService) *handlers {
-	return &handlers{taskService: taskService}
+func NewHandlers(service services.Service) *handlers {
+	return &handlers{service: service}
 }
 
 func (h *handlers) Hello(c echo.Context) error {
@@ -40,7 +40,7 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 	}
 
 	fmt.Println(taskRequest)
-	task, err := h.taskService.Create(taskRequest)
+	task, err := h.service.TaskService().Create(taskRequest)
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": "Failed to create task"})
 	}
@@ -65,7 +65,7 @@ func (h *handlers) GetTaskByIDHandler(c echo.Context) error {
 		preloadFlag, _ = strconv.ParseBool(preloadSubTaskParam)
 	}
 
-	task, err := h.taskService.FindByID(uint(id), preloadFlag)
+	task, err := h.service.TaskService().FindByID(uint(id), preloadFlag)
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return c.NoContent(http.StatusNoContent)
@@ -101,7 +101,7 @@ func (h *handlers) GetAllList(c echo.Context) error {
 		preloadFlag, _ = strconv.ParseBool(preloadSubTaskParam)
 	}
 
-	task, err := h.taskService.FilterTask(title, description, page, pageSize, preloadFlag)
+	task, err := h.service.TaskService().FilterTask(title, description, page, pageSize, preloadFlag)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
@@ -133,7 +133,7 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 	title := c.QueryParam("title")
 	description := c.QueryParam("description")
 
-	subTasks, err := h.taskService.FindSubTaskByTaskID(title, description, uint(parentID), page, pageSize)
+	subTasks, err := h.service.TaskService().FindSubTaskByTaskID(title, description, uint(parentID), page, pageSize)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
@@ -149,7 +149,7 @@ func (h *handlers) Delete(c echo.Context) error {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid Input"})
 	}
 
-	err = h.taskService.Delete(uint(id))
+	err = h.service.TaskService().Delete(uint(id))
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": err})
 	}
@@ -169,7 +169,7 @@ func (h *handlers) Update(c echo.Context) error {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
 	}
 
-	updateTask, err := h.taskService.Update(taskRequest, uint(id))
+	updateTask, err := h.service.TaskService().Update(taskRequest, uint(id))
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": err})
 	}
@@ -190,7 +190,7 @@ func (h *handlers) HandleMultipleFileUpload(c echo.Context) error {
 
 	//Iterate the files each uploaded file
 	for _, file := range files {
-		data, _ := h.taskService.SaveFile(uint(taskID), file)
+		data, _ := h.service.FileService().SaveFile(uint(taskID), file)
 		filesDetail = append(filesDetail, *data)
 	}
 

@@ -9,10 +9,10 @@ import (
 
 type Server struct {
 	config  config.Config
-	service services.TaskService
+	service services.Service
 }
 
-func NewServer(config config.Config, service services.TaskService) (*Server, error) {
+func NewServer(config config.Config, service services.Service) (*Server, error) {
 	server := &Server{
 		config:  config,
 		service: service,
