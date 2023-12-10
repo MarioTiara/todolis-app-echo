@@ -196,6 +196,7 @@ func (h *handlers) HandleMultipleFileUpload(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, filesDetail)
 }
+
 func isMultipartRequest(contentType string) bool {
 	return len(contentType) >= len("multipart/form-data") && contentType[:len("multipart/form-data")] == "multipart/form-data"
 }
