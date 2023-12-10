@@ -11,7 +11,7 @@ type TaskService interface {
 	FindAll() ([]models.Task, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
 	FindByID(ID uint, preload bool) (*models.Task, error)
-	CreateSubTask(parentID uint, subTask dtos.AddTaskRequest) (models.Task, error)
+	CreateSubTask(subTask dtos.AddSubTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
 	Delete(id uint) error
@@ -59,8 +59,8 @@ func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
 	return createdTask, err
 }
 
-func (s *task_service) CreateSubTask(parentID uint, request dtos.AddTaskRequest) (models.Task, error) {
-	var subTask = models.Task{Title: request.Title, Description: request.Description, ParentID: &parentID}
+func (s *task_service) CreateSubTask(request dtos.AddSubTaskRequest) (models.Task, error) {
+	var subTask = models.Task{Title: request.Title, Description: request.Description, ParentID: &request.ParentID}
 	return s.uow.TaskRepository().CreateSubTask(subTask)
 }
 

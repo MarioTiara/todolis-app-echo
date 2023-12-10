@@ -52,6 +52,10 @@ func (s *localStorage) LoadFile(fileName string) (interface{}, error) {
 	return fmt.Sprintf("%s/%s", s.UploadsDir, fileName), nil
 }
 
+func (s *localStorage) DeleteFile(fileName string) error {
+	err := os.Remove(s.UploadsDir + "/" + fileName)
+	return err
+}
 func removeExtension(fileName string) string {
 	return fileName[:len(fileName)-len(path.Ext(fileName))]
 }

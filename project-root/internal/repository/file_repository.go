@@ -9,6 +9,8 @@ type FileRepository interface {
 	Create(file models.Files) (models.Files, error)
 	GetByTaskID(taskID uint) ([]models.Files, error)
 	GetByID(id uint) (models.Files, error)
+	DeleteByID(id uint) error
+	DeleteByTaskID(taskID uint) error
 }
 
 type file_repository struct {
@@ -37,4 +39,14 @@ func (r *file_repository) GetByID(id uint) (models.Files, error) {
 	var file models.Files
 	err := r.db.First(&file, id).Error
 	return file, err
+}
+
+func (r *file_repository) DeleteByID(id uint) error {
+	err := r.db.Delete(&models.Files{}, id).Error
+	return err
+}
+
+func (r *file_repository) DeleteByTaskID(taskID uint) error {
+	err := r.db.Where("task_id = ?", taskID).Delete(&models.Files{}).Error
+	return err
 }

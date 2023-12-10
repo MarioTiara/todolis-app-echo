@@ -27,5 +27,4 @@ func (h *handlers) Update(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, updateTask)
-
 }

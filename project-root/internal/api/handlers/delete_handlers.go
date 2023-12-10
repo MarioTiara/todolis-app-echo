@@ -17,7 +17,11 @@ func (h *handlers) Delete(c echo.Context) error {
 
 	err = h.service.TaskService().Delete(uint(id))
 	if err != nil {
-		return c.JSON(500, map[string]interface{}{"error": err})
+		return c.JSON(500, map[string]interface{}{"error": "Failed to  delete Task"})
+	}
+	err = h.service.FileService().DeleteByTaskID(uint(id))
+	if err != nil {
+		return c.JSON(500, map[string]interface{}{"error": "Failed to delete files"})
 	}
 	return c.NoContent(http.StatusNoContent)
 }

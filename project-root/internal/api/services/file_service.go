@@ -12,6 +12,8 @@ type FileService interface {
 	SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error)
 	GetByTaskID(taskID uint) (*[]models.Files, error)
 	GetByID(fileID uint) (*models.Files, error)
+	DeleteByID(fileID uint) error
+	DeleteByTaskID(taskID uint) error
 }
 
 type files_service struct {
@@ -51,4 +53,27 @@ func (s *files_service) GetByID(fileID uint) (*models.Files, error) {
 	file, err := s.uow.FileRepository().GetByID(fileID)
 	s.uow.Commit()
 	return &file, err
+}
+
+func (s *files_service) DeleteByID(fileID uint) error {
+	s.uow.Begin()
+	err := s.uow.FileRepository().DeleteByID(fileID)
+	s.uow.Commit()
+	return err
+}
+
+func (s *files_service) DeleteByTaskID(taskID uint) error {
+	s.uow.Begin()
+	files, err := s.uow.FileRepository().GetByTaskID(taskID)
+	s.uow.Commit()
+	if err != nil {
+		return nil
+	}
+	s.uow.Begin()
+	for _, file := range files {
+		s.store.DeleteFile(file.FileName)
+		s.uow.FileRepository().DeleteByID(file.ID)
+	}
+	s.uow.Commit()
+	return err
 }
