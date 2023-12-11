@@ -29,9 +29,11 @@ func NewTaskService(uow repository.UnitOfWork, store storages.Storage) TaskServi
 }
 
 func (s *task_service) FindAll() ([]dtos.TaskQueryModel, error) {
+	s.uow.Begin()
 	tasks, err := s.uow.TaskRepository().FindAll()
+	s.uow.Commit()
 	if err != nil {
-		return []dtos.TaskQueryModel{}, nil
+		return []dtos.TaskQueryModel{}, err
 	}
 	taskQueryModels := []dtos.TaskQueryModel{}
 	for _, task := range tasks {
@@ -45,6 +47,9 @@ func (s *task_service) FindByID(ID uint, preload bool) (dtos.TaskQueryModel, err
 	s.uow.Begin()
 	task, err := s.uow.TaskRepository().FindByID(ID, preload)
 	s.uow.Commit()
+	if err != nil {
+		return dtos.TaskQueryModel{}, err
+	}
 	return utils.ConverTaskToQueryModel(task), err
 }
 

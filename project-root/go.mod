@@ -5,6 +5,7 @@ go 1.21.0
 require gorm.io/gorm v1.25.5
 
 require (
+	github.com/bxcodec/faker/v3 v3.8.1 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -58,6 +59,7 @@ require (
 )
 
 require (
+	github.com/bxcodec/faker v2.0.1+incompatible
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
