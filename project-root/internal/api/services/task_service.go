@@ -8,7 +8,7 @@ import (
 )
 
 type TaskService interface {
-	FindAll() ([]models.Task, error)
+	FindAll() ([]dtos.TaskQueryModel, error)
 	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
 	FindByID(ID uint, preload bool) (*models.Task, error)
 	CreateSubTask(subTask dtos.AddSubTaskRequest) (models.Task, error)
@@ -27,8 +27,9 @@ func NewTaskService(uow repository.UnitOfWork, store storages.Storage) TaskServi
 	return &task_service{uow, store}
 }
 
-func (s *task_service) FindAll() ([]models.Task, error) {
+func (s *task_service) FindAll() ([]dtos.TaskQueryModel, error) {
 	tasks, err := s.uow.TaskRepository().FindAll()
+
 	return tasks, err
 }
 
