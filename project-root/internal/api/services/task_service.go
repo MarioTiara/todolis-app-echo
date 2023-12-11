@@ -3,17 +3,18 @@ package services
 import (
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapp/internal/api/utils"
 	"github.com/marioTiara/todolistapp/internal/platform/storages"
 	"github.com/marioTiara/todolistapp/internal/repository"
 )
 
 type TaskService interface {
 	FindAll() ([]dtos.TaskQueryModel, error)
-	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error)
-	FindByID(ID uint, preload bool) (*models.Task, error)
+	FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]dtos.SubtaskQueryModel, error)
+	FindByID(ID uint, preload bool) (dtos.TaskQueryModel, error)
 	CreateSubTask(subTask dtos.AddSubTaskRequest) (models.Task, error)
 	Create(task dtos.AddTaskRequest) (models.Task, error)
-	FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error)
+	FilterTask(title, description string, page, limit int, preload bool) ([]dtos.TaskQueryModel, error)
 	Delete(id uint) error
 	Update(task dtos.AddTaskRequest, id uint) (models.Task, error)
 }
@@ -29,22 +30,37 @@ func NewTaskService(uow repository.UnitOfWork, store storages.Storage) TaskServi
 
 func (s *task_service) FindAll() ([]dtos.TaskQueryModel, error) {
 	tasks, err := s.uow.TaskRepository().FindAll()
-
-	return tasks, err
+	if err != nil {
+		return []dtos.TaskQueryModel{}, nil
+	}
+	taskQueryModels := []dtos.TaskQueryModel{}
+	for _, task := range tasks {
+		queryModel := utils.ConverTaskToQueryModel(task)
+		taskQueryModels = append(taskQueryModels, queryModel)
+	}
+	return taskQueryModels, err
 }
 
-func (s *task_service) FindByID(ID uint, preload bool) (*models.Task, error) {
+func (s *task_service) FindByID(ID uint, preload bool) (dtos.TaskQueryModel, error) {
 	s.uow.Begin()
 	task, err := s.uow.TaskRepository().FindByID(ID, preload)
 	s.uow.Commit()
-	return &task, err
+	return utils.ConverTaskToQueryModel(task), err
 }
 
-func (s *task_service) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) (*[]models.Task, error) {
+func (s *task_service) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]dtos.SubtaskQueryModel, error) {
 	s.uow.Begin()
 	subtasks, err := s.uow.TaskRepository().FindSubTaskByTaskID(title, description, parentID, page, limit)
 	s.uow.Commit()
-	return &subtasks, err
+	subtaskQueryModels := []dtos.SubtaskQueryModel{}
+	if err != nil {
+		return subtaskQueryModels, err
+	}
+	for _, subTask := range subtasks {
+		subTaskQueryModel := utils.ConvertSubTaskToSubtaskQueryModel(subTask)
+		subtaskQueryModels = append(subtaskQueryModels, subTaskQueryModel)
+	}
+	return subtaskQueryModels, err
 }
 
 func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
@@ -65,12 +81,21 @@ func (s *task_service) CreateSubTask(request dtos.AddSubTaskRequest) (models.Tas
 	return s.uow.TaskRepository().CreateSubTask(subTask)
 }
 
-func (s *task_service) FilterTask(title, description string, page, limit int, preload bool) ([]models.Task, error) {
+func (s *task_service) FilterTask(title, description string, page, limit int, preload bool) ([]dtos.TaskQueryModel, error) {
 	s.uow.Begin()
-	task, err := s.uow.TaskRepository().FilterByTitleAndDescription(title, description, page, limit, preload)
+	tasks, err := s.uow.TaskRepository().FilterByTitleAndDescription(title, description, page, limit, preload)
 	s.uow.Commit()
-	filterdData := removeSubtaskFromParentList(task)
-	return filterdData, err
+
+	taskQueryModels := []dtos.TaskQueryModel{}
+	if err != nil {
+		return taskQueryModels, err
+	}
+	filterdData := removeSubtaskFromParentList(tasks)
+	for _, task := range filterdData {
+		queryModel := utils.ConverTaskToQueryModel(task)
+		taskQueryModels = append(taskQueryModels, queryModel)
+	}
+	return taskQueryModels, err
 }
 
 func (s *task_service) Delete(id uint) error {
