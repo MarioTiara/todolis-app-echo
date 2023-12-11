@@ -7,7 +7,7 @@ import (
 
 func ConverTaskToQueryModel(task models.Task) dtos.TaskQueryModel {
 	queryModel := dtos.TaskQueryModel{}
-	queryModel.ID = task.Title
+	queryModel.ID = task.ID
 	queryModel.Title = task.Title
 	queryModel.Description = task.Description
 	queryModel.Priority = uint(task.Priority)

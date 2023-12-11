@@ -39,7 +39,7 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 	if preload {
 
 		err = r.db.Preload("Children", func(db *gorm.DB) *gorm.DB {
-			return db.Where("is_active= ?", true)
+			return db.Preload("Files").Where("is_active= ?", true)
 		}).Preload("Files").Where("is_active= ?", true).First(&parentTaskWithChildren, ID).Error
 
 	} else {

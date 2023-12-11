@@ -6,7 +6,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
-	"github.com/marioTiara/todolistapp/internal/api/models"
 	"github.com/marioTiara/todolistapp/internal/api/services"
 )
 
@@ -47,13 +46,13 @@ func (h *handlers) UploadTaskFilesHandler(c echo.Context) error {
 	if err != nil {
 		return c.JSON(400, map[string]interface{}{"error": "file upload failed"})
 	}
-	var filesDetail []models.Files
+	var filesDetail []dtos.FileQueryModel
 	files := form.File["files"]
 
 	//Iterate the files each uploaded file
 	for _, file := range files {
 		data, _ := h.service.FileService().SaveFile(uint(taskID), file)
-		filesDetail = append(filesDetail, *data)
+		filesDetail = append(filesDetail, data)
 	}
 	return c.JSON(http.StatusOK, filesDetail)
 }

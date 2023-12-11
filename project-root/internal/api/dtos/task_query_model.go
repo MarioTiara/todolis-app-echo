@@ -3,7 +3,7 @@ package dtos
 import "time"
 
 type TaskQueryModel struct {
-	ID          string              `json:"id"`
+	ID          uint                `json:"id"`
 	Title       string              `json:"title"`
 	Description string              `json:"description"`
 	CreatedAt   time.Time           `json:"created_at"`

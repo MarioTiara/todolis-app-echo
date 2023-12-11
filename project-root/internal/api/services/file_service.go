@@ -3,14 +3,17 @@ package services
 import (
 	"fmt"
 	"mime/multipart"
+	"os"
 
+	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapp/internal/api/utils"
 	"github.com/marioTiara/todolistapp/internal/platform/storages"
 	"github.com/marioTiara/todolistapp/internal/repository"
 )
 
 type FileService interface {
-	SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error)
+	SaveFile(taskID uint, file *multipart.FileHeader) (dtos.FileQueryModel, error)
 	GetByTaskID(taskID uint) (*[]models.Files, error)
 	GetByID(fileID uint) (*models.Files, error)
 	DeleteByID(fileID uint) error
@@ -27,20 +30,29 @@ func NewFileSevice(uow repository.UnitOfWork, store storages.Storage) FileServic
 	return &files_service{uow, store}
 }
 
-func (s *files_service) SaveFile(taskID uint, file *multipart.FileHeader) (*models.Files, error) {
+func (s *files_service) SaveFile(taskID uint, file *multipart.FileHeader) (dtos.FileQueryModel, error) {
 	fileName, err := s.store.SaveFile(file)
 	fileDetail := models.Files{}
 	if err != nil {
-		return &fileDetail, err
+		return dtos.FileQueryModel{}, err
 	}
 	fileDetail.FileName = fileName
 	fileDetail.TaskID = uint(taskID)
+	fileDetail.FileURL = s.store.Path() + "/" + fileName
+
+	fileInfo, err := os.Stat(fileDetail.FileURL)
+	if err != nil {
+		return dtos.FileQueryModel{}, err
+	}
+	fileDetail.FileSize = uint(fileInfo.Size())
 
 	s.uow.Begin()
 	savedFile, _ := s.uow.FileRepository().Create(fileDetail)
 	s.uow.Commit()
 
-	return &savedFile, err
+	queryModel := utils.ConverFileToFileQueryModel(savedFile)
+
+	return queryModel, err
 }
 
 func (s *files_service) GetByTaskID(taskID uint) (*[]models.Files, error) {

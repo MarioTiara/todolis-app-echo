@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/marioTiara/todolistapp/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,8 @@ type postgress struct {
 	db *gorm.DB
 }
 
-func NewPostGressDB(dsn string) *postgress {
+func NewPostGressDB(config config.Config) *postgress {
+	dsn := config.DbSource
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err)
