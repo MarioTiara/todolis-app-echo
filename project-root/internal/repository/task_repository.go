@@ -51,7 +51,7 @@ func (r *task_repository) FindByID(ID uint, preload bool) (models.Task, error) {
 
 func (r *task_repository) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]models.Task, error) {
 	var Subtasks []models.Task
-	query := r.db.Model(&models.Task{}).Where("is_active = ?", true).Where("parent_id= ?", parentID)
+	query := r.db.Model(&models.Task{}).Order("priority asc").Where("is_active = ?", true).Where("parent_id= ?", parentID)
 
 	if title != "" {
 		query = query.Where("title LIKE ?", "%"+title+"%")
@@ -77,7 +77,7 @@ func (r *task_repository) Create(task models.Task) (models.Task, error) {
 
 func (r *task_repository) FilterByTitleAndDescription(title, description string, page, limit int, preload bool) ([]models.Task, error) {
 	var tasks []models.Task
-	query := r.db.Model(&models.Task{}).Where("is_active = ?", true)
+	query := r.db.Model(&models.Task{}).Order("priority asc").Where("is_active = ?", true)
 
 	if title != "" {
 		query = query.Where("title LIKE ?", "%"+title+"%")
@@ -116,7 +116,9 @@ func (r *task_repository) SoftDelete(id uint) error {
 
 func (r *task_repository) Update(task models.Task) (models.Task, error) {
 	oldData, err := r.FindByID(task.ID, false)
-
+	if err != nil {
+		return models.Task{}, err
+	}
 	oldData.Title = task.Title
 	oldData.Description = task.Description
 	oldData.UpdatedAt = time.Now().UTC()

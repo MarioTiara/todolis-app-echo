@@ -1,0 +1,4 @@
+ALTER TABLE files
+DROP COLUMN IF EXISTS file_size,
+DROP COLUMN IF EXISTS file_url,
+DROP COLUMN IF EXISTS created_at;

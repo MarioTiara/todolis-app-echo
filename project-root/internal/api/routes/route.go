@@ -17,7 +17,6 @@ func SetRoutes(e *echo.Echo, s services.Service) {
 
 	v1.POST("/tasks", handler.PostTaskHandler)
 	v1.POST("/uploads/add", handler.UploadTaskFilesHandler)
-
 	v1.PUT("/tasks/:id", handler.Update)
 
 	v1.DELETE("/tasks/:id", handler.DeleteTask)

@@ -1,0 +1,2 @@
+ALTER TABLE tasks
+ALTER COLUMN checked SET DEFAULT true;

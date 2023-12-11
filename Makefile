@@ -17,7 +17,7 @@ migration_status:
 	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" status
 
 migration_fix:
-	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" force 3
+	migrate -path project-root/migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" force 9
 
 atlas-migration:
 	atlas migrate diff --env gorm 
