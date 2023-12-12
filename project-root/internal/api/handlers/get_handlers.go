@@ -103,6 +103,6 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 
 func (h *handlers) DownloadFile(c echo.Context) error {
 	fileName := c.QueryParam("fileName")
-	path := h.service.FileService().Download(fileName)
+	path, _ := h.service.FileService().Download(fileName)
 	return c.Inline(path, fileName)
 }

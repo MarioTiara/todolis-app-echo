@@ -22,7 +22,7 @@ func GenerateFile() models.Files {
 
 func GenerateFilesList(lenght int) []models.Files {
 	var files []models.Files
-	for i := 0; i <= lenght; i++ {
+	for i := 0; i < lenght; i++ {
 		file := GenerateFile()
 		files = append(files, file)
 	}
@@ -103,7 +103,7 @@ func GenerateAddTaskRequest(numberOfChild int) dtos.AddTaskRequest {
 	request.Title = faker.Sentence()
 	request.Description = faker.Sentence()
 	request.Priority = 1
-	for i := 0; i <= numberOfChild; i++ {
+	for i := 0; i < numberOfChild; i++ {
 		child := dtos.AddTaskRequest{
 			Title:       faker.Sentence(),
 			Description: faker.Sentence(),

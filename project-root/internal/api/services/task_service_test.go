@@ -22,7 +22,7 @@ func TestNewTaskService(t *testing.T) {
 	mock_store := mocks.NewMockStorage(ctr)
 
 	//Act
-	service := NewFileSevice(mock_uow, mock_store)
+	service := NewTaskService(mock_uow, mock_store)
 
 	//Assert
 	assert.NotNil(t, service)
