@@ -16,7 +16,7 @@ type TaskService interface {
 	Create(task dtos.AddTaskRequest) (models.Task, error)
 	FilterTask(title, description string, page, limit int, preload bool) ([]dtos.TaskQueryModel, error)
 	Delete(id uint) error
-	Update(task dtos.AddTaskRequest, id uint) (models.Task, error)
+	Update(task dtos.UpdateTaskRequest) (models.Task, error)
 }
 
 type task_service struct {
@@ -37,7 +37,7 @@ func (s *task_service) FindAll() ([]dtos.TaskQueryModel, error) {
 	}
 	taskQueryModels := []dtos.TaskQueryModel{}
 	for _, task := range tasks {
-		queryModel := utils.ConverTaskToQueryModel(task)
+		queryModel := utils.ConvertTaskToQueryModel(task)
 		taskQueryModels = append(taskQueryModels, queryModel)
 	}
 	return taskQueryModels, err
@@ -50,7 +50,7 @@ func (s *task_service) FindByID(ID uint, preload bool) (dtos.TaskQueryModel, err
 	if err != nil {
 		return dtos.TaskQueryModel{}, err
 	}
-	return utils.ConverTaskToQueryModel(task), err
+	return utils.ConvertTaskToQueryModel(task), err
 }
 
 func (s *task_service) FindSubTaskByTaskID(title, description string, parentID uint, page, limit int) ([]dtos.SubtaskQueryModel, error) {
@@ -69,21 +69,26 @@ func (s *task_service) FindSubTaskByTaskID(title, description string, parentID u
 }
 
 func (s *task_service) Create(task dtos.AddTaskRequest) (models.Task, error) {
-	//datetime := time.Now()
-
-	var parentTask = convertRequestToTaskEntity(task)
-	for _, task := range task.Children {
-		parentTask.Children = append(parentTask.Children, convertRequestToTaskEntity(task))
-	}
+	var parentTask = utils.ConvertRequestToTaskEntity(task)
 	s.uow.Begin()
 	createdTask, err := s.uow.TaskRepository().Create(parentTask)
 	s.uow.Commit()
+
+	if err != nil {
+		return createdTask, err
+	}
 	return createdTask, err
 }
 
 func (s *task_service) CreateSubTask(request dtos.AddSubTaskRequest) (models.Task, error) {
-	var subTask = models.Task{Title: request.Title, Description: request.Description, ParentID: &request.ParentID}
-	return s.uow.TaskRepository().CreateSubTask(subTask)
+	var subTask = utils.ConvertSubTaskRequestToTaskEntity(request)
+	s.uow.Begin()
+	task, err := s.uow.TaskRepository().CreateSubTask(subTask)
+	s.uow.Commit()
+	if err != nil {
+		return models.Task{}, err
+	}
+	return task, nil
 }
 
 func (s *task_service) FilterTask(title, description string, page, limit int, preload bool) ([]dtos.TaskQueryModel, error) {
@@ -97,7 +102,7 @@ func (s *task_service) FilterTask(title, description string, page, limit int, pr
 	}
 	filterdData := removeSubtaskFromParentList(tasks)
 	for _, task := range filterdData {
-		queryModel := utils.ConverTaskToQueryModel(task)
+		queryModel := utils.ConvertTaskToQueryModel(task)
 		taskQueryModels = append(taskQueryModels, queryModel)
 	}
 	return taskQueryModels, err
@@ -110,21 +115,22 @@ func (s *task_service) Delete(id uint) error {
 	return err
 }
 
-func (s *task_service) Update(task dtos.AddTaskRequest, id uint) (models.Task, error) {
+func (s *task_service) Update(task dtos.UpdateTaskRequest) (models.Task, error) {
 	newtask := models.Task{
-		ID:          id,
+		ID:          task.ID,
 		Title:       task.Title,
 		Description: task.Description,
+		Priority:    task.Priority,
+		ParentID:    task.ParentID,
+		Checked:     task.Checked,
 	}
 	s.uow.Begin()
 	updatedTask, err := s.uow.TaskRepository().Update(newtask)
 	s.uow.Commit()
+	if err != nil {
+		return models.Task{}, err
+	}
 	return updatedTask, err
-}
-
-func convertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
-	newtask := models.Task{Title: request.Title, Description: request.Description}
-	return newtask
 }
 
 func removeSubtaskFromParentList(tasks []models.Task) []models.Task {

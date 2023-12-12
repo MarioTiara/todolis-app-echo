@@ -1,81 +1,138 @@
 package datafake
 
 import (
-	"fmt"
+	"time"
 
 	"github.com/bxcodec/faker/v3"
+	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
 )
 
 func GenerateFile() models.Files {
 	var file models.Files
-
-	err := faker.FakeData(&file)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return models.Files{}
-	}
+	rand, _ := faker.RandomInt(10, 23)
+	file.ID = uint(rand[0])
+	file.FileName = faker.Sentence()
+	file.FileSize = uint(rand[1])
+	file.FileURL = faker.Sentence()
+	file.CreatedAt = time.Now()
+	file.TaskID = uint(rand[2])
 	return file
 }
 
-func GenerateFilesList() []models.Files {
+func GenerateFilesList(lenght int) []models.Files {
 	var files []models.Files
-	for i := 0; 1 <= 5; i++ {
+	for i := 0; i <= lenght; i++ {
 		file := GenerateFile()
 		files = append(files, file)
 	}
 	return files
 }
 
-func GenerateTask(depth int) models.Task {
-	if depth <= 0 {
-		return models.Task{} // Return an empty task when depth is exhausted
-	}
-
+func GenerateTask() models.Task {
 	var task models.Task
 
-	// Generate fake data for the Task struct
-	err := faker.FakeData(&task)
-	if err != nil {
-		fmt.Println("Error generating fake Task data:", err)
-	}
+	rand, _ := faker.RandomInt(50, 500)
+	task.ID = uint(rand[0])
+	task.Title = faker.Sentence()
+	task.Description = faker.Sentence()
+	task.CreatedAt = time.Now().UTC()
+	task.UpdatedAt = time.Now().UTC()
+	task.Priority = rand[1]
+	task.Checked = false
+	task.IsActive = true
+	task.Files = GenerateFilesList(3)
+	task.ParentID = nil
+	task.Children = append(task.Children, models.Task{
+		ID:          uint(rand[0]),
+		Title:       faker.Sentence(),
+		Description: faker.Sentence(),
+		CreatedAt:   time.Now().UTC(),
+		UpdatedAt:   time.Now().UTC(),
+		Priority:    rand[1],
+		Checked:     false,
+		IsActive:    true,
+		ParentID:    &task.ID,
+		Files:       GenerateFilesList(2),
+	})
+	return task
+}
 
-	// Manually customize or exclude specific fields if needed
-	task.Title = "CustomTitle"
-	task.Description = "CustomDescription"
+func GenerateSubtask() models.Task {
+	intValue := 0
+	uintValue := uint(intValue)
+	var task models.Task
 
-	// Generate fake data for the Files struct
-	for i := 0; i < 3; i++ {
-		var file models.Files
-		err := faker.FakeData(&file)
-		if err != nil {
-			fmt.Println("Error generating fake Files data:", err)
-		}
-
-		// Manually set the TaskID for the Files struct
-		file.TaskID = task.ID
-
-		// Append the generated file to the task's Files slice
-		task.Files = append(task.Files, file)
-	}
-
-	// Recursively generate fake data for children with reduced depth
-	for i := 0; i < 2; i++ {
-		childTask := GenerateTask(depth - 1)
-		if childTask.ID != 0 {
-			task.Children = append(task.Children, childTask)
-		}
-	}
+	rand, _ := faker.RandomInt(50, 500)
+	task.ID = uint(rand[0])
+	task.Title = faker.Sentence()
+	task.Description = faker.Sentence()
+	task.CreatedAt = time.Now().UTC()
+	task.UpdatedAt = time.Now().UTC()
+	task.Priority = rand[1]
+	task.Checked = false
+	task.IsActive = true
+	task.Files = GenerateFilesList(3)
+	task.ParentID = &uintValue
 
 	return task
 }
 
-func GenerateTasksList() []models.Task {
+func GenerateSubtaskList(lenght int) []models.Task {
 	var tasks []models.Task
-	for i := 0; i < 10; i++ {
-		task := GenerateTask(5)
+	for i := 0; i < lenght; i++ {
+		task := GenerateSubtask()
 		tasks = append(tasks, task)
 	}
 
 	return tasks
+}
+
+func GenerateTasksList(lenght int) []models.Task {
+	var tasks []models.Task
+	for i := 0; i < lenght; i++ {
+		task := GenerateTask()
+		tasks = append(tasks, task)
+	}
+
+	return tasks
+}
+
+func GenerateAddTaskRequest(numberOfChild int) dtos.AddTaskRequest {
+	request := dtos.AddTaskRequest{}
+	request.Title = faker.Sentence()
+	request.Description = faker.Sentence()
+	request.Priority = 1
+	for i := 0; i <= numberOfChild; i++ {
+		child := dtos.AddTaskRequest{
+			Title:       faker.Sentence(),
+			Description: faker.Sentence(),
+			Priority:    1,
+		}
+		request.Children = append(request.Children, child)
+	}
+	return request
+}
+
+func GenerateAddSubTaskRequest(parentID uint) dtos.AddSubTaskRequest {
+	request := dtos.AddSubTaskRequest{}
+	request.Title = faker.Sentence()
+	request.Description = faker.Sentence()
+	request.Priority = 1
+	request.ParentID = parentID
+	return request
+}
+
+func GenerateUpdateTaskRequest() dtos.UpdateTaskRequest {
+	parentId := uint(0)
+	request := dtos.UpdateTaskRequest{
+		Title:       faker.Sentence(),
+		Description: faker.Sentence(),
+		ID:          1,
+		Priority:    1,
+		Checked:     false,
+		ParentID:    &parentId,
+	}
+
+	return request
 }

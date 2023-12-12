@@ -5,7 +5,7 @@ import (
 	"github.com/marioTiara/todolistapp/internal/api/models"
 )
 
-func ConverTaskToQueryModel(task models.Task) dtos.TaskQueryModel {
+func ConvertTaskToQueryModel(task models.Task) dtos.TaskQueryModel {
 	queryModel := dtos.TaskQueryModel{}
 	queryModel.ID = task.ID
 	queryModel.Title = task.Title
@@ -59,4 +59,17 @@ func ConvertSubTaskToSubtaskQueryModel(subTask models.Task) dtos.SubtaskQueryMod
 	}
 
 	return subTaskQueryModel
+}
+
+func ConvertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
+	newtask := models.Task{Title: request.Title, Description: request.Description}
+	for _, child := range request.Children {
+		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description})
+	}
+	return newtask
+}
+
+func ConvertSubTaskRequestToTaskEntity(request dtos.AddSubTaskRequest) models.Task {
+	var subTask = models.Task{Title: request.Title, Description: request.Description, ParentID: &request.ParentID}
+	return subTask
 }
