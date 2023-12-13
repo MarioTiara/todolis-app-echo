@@ -3,12 +3,14 @@ package services
 import (
 	"errors"
 	"mime/multipart"
+	"os"
 	"testing"
 
 	"github.com/golang/mock/gomock"
 	datafake "github.com/marioTiara/todolistapp/data-fake"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapp/internal/api/utils"
 	"github.com/marioTiara/todolistapp/mocks"
 	"github.com/stretchr/testify/assert"
 )
@@ -335,8 +337,13 @@ func TestDownload(t *testing.T) {
 }
 
 func TestSaveFile(t *testing.T) {
-	dir := "../static"
+	dir := "../../../static"
 	fileName := "test_file.png"
+	wrong_file := "wrong_name.png"
+
+	_, expectedFileInforErr := os.Stat(dir + "/" + wrong_file)
+	file := datafake.GenerateFile()
+	modelfileQuery := utils.ConverFileToFileQueryModel(file)
 
 	testCases := []struct {
 		name           string
@@ -353,6 +360,15 @@ func TestSaveFile(t *testing.T) {
 			expectedResult: dtos.FileQueryModel{},
 		},
 		{
+			name: "err file is not found ",
+			mockSetup: func(mockStore *mocks.MockStorage, mockFileRepo *mocks.MockFileRepository, mock_uow *mocks.MockUnitOfWork) {
+				mockStore.EXPECT().SaveFile(gomock.Any()).Return("wrong_name.png", nil)
+				mockStore.EXPECT().Path().Return(dir)
+			},
+			expectedError:  expectedFileInforErr,
+			expectedResult: dtos.FileQueryModel{},
+		},
+		{
 			name: "Failed save data to database",
 			mockSetup: func(mockStore *mocks.MockStorage, mockFileRepo *mocks.MockFileRepository, mock_uow *mocks.MockUnitOfWork) {
 				mockStore.EXPECT().SaveFile(gomock.Any()).Return(fileName, nil)
@@ -360,11 +376,23 @@ func TestSaveFile(t *testing.T) {
 				mockFileRepo.EXPECT().Create(gomock.Any()).Return(models.Files{}, errors.New("mock error"))
 				mock_uow.EXPECT().Begin().Times(1)
 				mock_uow.EXPECT().Commit().Times(1)
-
 				mock_uow.EXPECT().FileRepository().Return(mockFileRepo)
 			},
 			expectedError:  errors.New("mock error"),
 			expectedResult: dtos.FileQueryModel{},
+		},
+		{
+			name: "Success save data to database",
+			mockSetup: func(mockStore *mocks.MockStorage, mockFileRepo *mocks.MockFileRepository, mock_uow *mocks.MockUnitOfWork) {
+				mockStore.EXPECT().SaveFile(gomock.Any()).Return(fileName, nil)
+				mockStore.EXPECT().Path().Return(dir)
+				mockFileRepo.EXPECT().Create(gomock.Any()).Return(file, nil)
+				mock_uow.EXPECT().Begin().Times(1)
+				mock_uow.EXPECT().Commit().Times(1)
+				mock_uow.EXPECT().FileRepository().Return(mockFileRepo)
+			},
+			expectedError:  nil,
+			expectedResult: modelfileQuery,
 		},
 	}
 
@@ -385,8 +413,8 @@ func TestSaveFile(t *testing.T) {
 
 			//Act
 			result, err := taskService.SaveFile(1, &multipart.FileHeader{})
-			assert.Equal(t, err, tc.expectedError)
-			assert.Equal(t, result, tc.expectedResult)
+			assert.Equal(t, tc.expectedError, err)
+			assert.Equal(t, tc.expectedResult, result)
 
 		})
 	}
