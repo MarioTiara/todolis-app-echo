@@ -9,7 +9,8 @@ import (
 func SetRoutes(e *echo.Echo, s services.Service) {
 	handler := handlers.NewHandlers(s)
 	v1 := e.Group("v1")
-	v1.GET("/", handler.Hello)
+	v1.GET("/", handler.Accessible)
+	v1.POST("/login", handler.Login)
 	v1.GET("/tasks", handler.GetAllList)
 	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
 	v1.GET("/subTask/:parentID", handler.GetAllSubListByParentID)

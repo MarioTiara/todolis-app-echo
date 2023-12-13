@@ -17,6 +17,7 @@ func main() {
 	service := services.NewServices(uow, store)
 
 	server, _ := server.NewServer(configuration, service)
+	server.UseJWT()
 	server.Start()
 
 }

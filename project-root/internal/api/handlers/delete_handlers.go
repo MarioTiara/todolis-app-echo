@@ -8,7 +8,7 @@ import (
 )
 
 // [METHOD:DELETE] Menghapus data list/sub list.
-func (h *handlers) DeleteTask(c echo.Context) error {
+func (h *Handler) DeleteTask(c echo.Context) error {
 	strID := c.Param("id")
 	id, err := strconv.ParseUint(strID, 10, 64)
 	if err != nil {
@@ -26,7 +26,7 @@ func (h *handlers) DeleteTask(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-func (h *handlers) DeleteFile(c echo.Context) error {
+func (h *Handler) DeleteFile(c echo.Context) error {
 	strID := c.Param("id")
 	id, err := strconv.ParseUint(strID, 10, 64)
 	if err != nil {

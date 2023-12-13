@@ -11,7 +11,7 @@ import (
 
 // 2. [METHOD:GET] Menampilkan data detail list by list id.
 // 4. [METHOD:GET] Menampilkan data detail sub list by sub list id.
-func (h *handlers) GetTaskByIDHandler(c echo.Context) error {
+func (h *Handler) GetTaskByIDHandler(c echo.Context) error {
 
 	strID := c.Param("id")
 	id, err := strconv.ParseUint(strID, 10, 64)
@@ -39,7 +39,7 @@ func (h *handlers) GetTaskByIDHandler(c echo.Context) error {
 }
 
 // 1. [METHOD:GET] Menampilkan data all list ( include pagination, filter[Search By: title, description] ) dengan atau tanpa preload sub list (dynamic)
-func (h *handlers) GetAllList(c echo.Context) error {
+func (h *Handler) GetAllList(c echo.Context) error {
 	//pagination parameters
 	page, _ := strconv.Atoi(c.QueryParam("page"))
 	pageSize, _ := strconv.Atoi(c.QueryParam("pageSize"))
@@ -72,7 +72,7 @@ func (h *handlers) GetAllList(c echo.Context) error {
 }
 
 // 3.[METHOD:GET] Menampilkan data all sub list by list id ( include pagination, filter[Search By: title, description] )
-func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
+func (h *Handler) GetAllSubListByParentID(c echo.Context) error {
 	strID := c.Param("parentID")
 	parentID, err := strconv.ParseUint(strID, 10, 64)
 	if err != nil {
@@ -101,7 +101,7 @@ func (h *handlers) GetAllSubListByParentID(c echo.Context) error {
 	return c.JSON(http.StatusOK, subTasks)
 }
 
-func (h *handlers) DownloadFile(c echo.Context) error {
+func (h *Handler) DownloadFile(c echo.Context) error {
 	fileName := c.QueryParam("fileName")
 	path, _ := h.service.FileService().Download(fileName)
 	return c.Inline(path, fileName)

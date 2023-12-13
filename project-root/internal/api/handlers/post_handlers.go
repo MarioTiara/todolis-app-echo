@@ -6,23 +6,14 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
-	"github.com/marioTiara/todolistapp/internal/api/services"
 )
 
-type handlers struct {
-	service services.Service
-}
-
-func NewHandlers(service services.Service) *handlers {
-	return &handlers{service: service}
-}
-
-func (h *handlers) Hello(c echo.Context) error {
+func (h *Handler) Hello(c echo.Context) error {
 	return c.String(http.StatusOK, "hello world")
 }
 
 // 5.[METHOD:POST] Menambahkan data list.
-func (h *handlers) PostTaskHandler(c echo.Context) error {
+func (h *Handler) PostTaskHandler(c echo.Context) error {
 	var taskRequest dtos.AddTaskRequest
 	if err := c.Bind(&taskRequest); err != nil {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
@@ -35,7 +26,7 @@ func (h *handlers) PostTaskHandler(c echo.Context) error {
 }
 
 // Upload Files
-func (h *handlers) UploadTaskFilesHandler(c echo.Context) error {
+func (h *Handler) UploadTaskFilesHandler(c echo.Context) error {
 	taskID, err := strconv.ParseUint(c.FormValue("taskID"), 10, 64)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": "Invalid Parameter"})
@@ -57,7 +48,7 @@ func (h *handlers) UploadTaskFilesHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, filesDetail)
 }
 
-func (h *handlers) PostSubTaskHandler(c echo.Context) error {
+func (h *Handler) PostSubTaskHandler(c echo.Context) error {
 	var subTask dtos.AddSubTaskRequest
 	if err := c.Bind(&subTask); err != nil {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid input"})
