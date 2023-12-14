@@ -15,6 +15,7 @@ type Server struct {
 	service services.Service
 	e       *echo.Echo
 	handler *handlers.Handler
+	eGroup  *echo.Group
 }
 
 func NewServer(config config.Config, service services.Service) (*Server, error) {
@@ -28,21 +29,23 @@ func NewServer(config config.Config, service services.Service) (*Server, error) 
 }
 
 func (server *Server) UseJWT() {
-	r := server.e.Group("/restricted")
+	server.eGroup = server.e.Group("/v1/restricted")
 	config := echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(handlers.JwtCustomClaims)
 		},
-
 		SigningKey: []byte("secret"),
 	}
+	server.eGroup.Use(echojwt.WithConfig(config))
+	server.eGroup.GET("", server.handler.Restricted)
+}
 
-	r.Use(echojwt.WithConfig(config))
-	r.GET("", server.handler.Restricted)
-
+func (server *Server) SetRoutes() {
+	server.e.GET("/", server.handler.Accessible)
+	server.e.POST("/v1/login", server.handler.Login)
+	routes.SetRoutes(server.eGroup, server.handler)
 }
 func (server *Server) Start() {
-	routes.SetRoutes(server.e, server.service)
 	if err := server.e.Start(":8080"); err != nil {
 		panic("failed to start the server")
 	}

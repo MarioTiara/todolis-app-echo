@@ -3,23 +3,22 @@ package routes
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/handlers"
-	"github.com/marioTiara/todolistapp/internal/api/services"
 )
 
-func SetRoutes(e *echo.Echo, s services.Service) {
-	handler := handlers.NewHandlers(s)
-	v1 := e.Group("v1")
-	v1.GET("/", handler.Accessible)
-	v1.POST("/login", handler.Login)
-	v1.GET("/tasks", handler.GetAllList)
-	v1.GET("/tasks/:id", handler.GetTaskByIDHandler)
-	v1.GET("/subTask/:parentID", handler.GetAllSubListByParentID)
-	v1.GET("/uploads/get", handler.DownloadFile)
+func SetRoutes(g *echo.Group, handler *handlers.Handler) {
+	//handler := handlers.NewHandlers(s)
+	// g := e.Group("g")
+	//g.GET("/", handler.Accessible)
 
-	v1.POST("/tasks", handler.PostTaskHandler)
-	v1.POST("/uploads/add", handler.UploadTaskFilesHandler)
-	v1.PUT("/tasks/:id", handler.Update)
+	g.GET("/tasks", handler.GetAllList)
+	g.GET("/tasks/:id", handler.GetTaskByIDHandler)
+	g.GET("/subTask/:parentID", handler.GetAllSubListByParentID)
+	g.GET("/uploads/get", handler.DownloadFile)
 
-	v1.DELETE("/tasks/:id", handler.DeleteTask)
-	v1.DELETE("/uploads/delete/:id", handler.DeleteFile)
+	g.POST("/tasks", handler.PostTaskHandler)
+	g.POST("/uploads/add", handler.UploadTaskFilesHandler)
+	g.PUT("/tasks/:id", handler.Update)
+
+	g.DELETE("/tasks/:id", handler.DeleteTask)
+	g.DELETE("/uploads/delete/:id", handler.DeleteFile)
 }

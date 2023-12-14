@@ -18,6 +18,7 @@ func main() {
 
 	server, _ := server.NewServer(configuration, service)
 	server.UseJWT()
+	server.SetRoutes()
 	server.Start()
 
 }
