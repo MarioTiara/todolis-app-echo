@@ -12,7 +12,7 @@ import (
 func main() {
 	configuration, _ := config.LoadConfig("../config")
 	postgress := database.NewPostGressDB(configuration)
-	store := storages.NewLocalStoarge("uploads")
+	store := storages.NewLocalStoarge("../uploads")
 	uow := repository.NewUnitOfWork(postgress.GetDB())
 	service := services.NewServices(uow, store)
 
