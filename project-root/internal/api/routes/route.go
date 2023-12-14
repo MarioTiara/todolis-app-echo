@@ -17,7 +17,7 @@ func SetRoutes(g *echo.Group, handler *handlers.Handler) {
 
 	g.POST("/tasks", handler.PostTaskHandler)
 	g.POST("/uploads/add", handler.UploadTaskFilesHandler)
-	g.PUT("/tasks/:id", handler.Update)
+	g.PUT("/tasks", handler.Update)
 
 	g.DELETE("/tasks/:id", handler.DeleteTask)
 	g.DELETE("/uploads/delete/:id", handler.DeleteFile)

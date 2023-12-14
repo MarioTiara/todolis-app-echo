@@ -35,7 +35,7 @@ func (h *Handler) GetTaskByIDHandler(c echo.Context) error {
 	if err != nil {
 		return c.JSON(500, map[string]interface{}{"error": "Failed to load task"})
 	}
-	return c.JSON(200, task)
+	return c.JSON(200, map[string]interface{}{"status": "sucess", "data": task})
 }
 
 // 1. [METHOD:GET] Menampilkan data all list ( include pagination, filter[Search By: title, description] ) dengan atau tanpa preload sub list (dynamic)
@@ -63,12 +63,11 @@ func (h *Handler) GetAllList(c echo.Context) error {
 		preloadFlag, _ = strconv.ParseBool(preloadSubTaskParam)
 	}
 
-	task, err := h.service.TaskService().FilterTask(title, description, page, pageSize, preloadFlag)
+	tasks, err := h.service.TaskService().FilterTask(title, description, page, pageSize, preloadFlag)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
-	return c.JSON(http.StatusOK, task)
-
+	return c.JSON(200, map[string]interface{}{"status": "sucess", "data": tasks})
 }
 
 // 3.[METHOD:GET] Menampilkan data all sub list by list id ( include pagination, filter[Search By: title, description] )
@@ -98,7 +97,7 @@ func (h *Handler) GetAllSubListByParentID(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"error": err})
 	}
-	return c.JSON(http.StatusOK, subTasks)
+	return c.JSON(200, map[string]interface{}{"status": "sucess", "data": subTasks})
 }
 
 func (h *Handler) DownloadFile(c echo.Context) error {
