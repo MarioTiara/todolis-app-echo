@@ -92,7 +92,7 @@ func TestConvertRequestToTaskEntity(t *testing.T) {
 	//Arrange
 	request := datafake.GenerateAddTaskRequest(2)
 	newtask := models.Task{Title: request.Title, Description: request.Description}
-	for _, child := range request.Children {
+	for _, child := range request.Childrens {
 		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description})
 	}
 

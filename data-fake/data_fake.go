@@ -109,7 +109,7 @@ func GenerateAddTaskRequest(numberOfChild int) dtos.AddTaskRequest {
 			Description: faker.Sentence(),
 			Priority:    1,
 		}
-		request.Children = append(request.Children, child)
+		request.Childrens = append(request.Childrens, child)
 	}
 	return request
 }
