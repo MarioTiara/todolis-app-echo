@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
+	"github.com/marioTiara/todolistapp/internal/api/utils"
 )
 
 // 5.[METHOD:POST] Menambahkan data list.
@@ -40,6 +41,9 @@ func (h *Handler) UploadTaskFilesHandler(c echo.Context) error {
 	}
 	//Iterate the files each uploaded file
 	for _, file := range files {
+		if !utils.IsValidFileExtension(file) {
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": "file extension should in .text or .pdf"})
+		}
 		data, _ := h.service.FileService().SaveFile(uint(taskID), file)
 		filesDetail = append(filesDetail, data)
 	}
