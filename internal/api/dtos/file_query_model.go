@@ -1,6 +1,8 @@
 package dtos
 
-import "time"
+import (
+	"time"
+)
 
 type FileQueryModel struct {
 	ID           uint      `json:"id"`

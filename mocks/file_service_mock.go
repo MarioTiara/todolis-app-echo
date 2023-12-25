@@ -65,11 +65,12 @@ func (mr *MockFileServiceMockRecorder) DeleteByTaskID(taskID interface{}) *gomoc
 }
 
 // Download mocks base method.
-func (m *MockFileService) Download(fileName string) string {
+func (m *MockFileService) Download(fileName string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Download", fileName)
 	ret0, _ := ret[0].(string)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Download indicates an expected call of Download.
@@ -79,10 +80,10 @@ func (mr *MockFileServiceMockRecorder) Download(fileName interface{}) *gomock.Ca
 }
 
 // GetByID mocks base method.
-func (m *MockFileService) GetByID(fileID uint) (*models.Files, error) {
+func (m *MockFileService) GetByID(fileID uint) (models.Files, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", fileID)
-	ret0, _ := ret[0].(*models.Files)
+	ret0, _ := ret[0].(models.Files)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -94,10 +95,10 @@ func (mr *MockFileServiceMockRecorder) GetByID(fileID interface{}) *gomock.Call 
 }
 
 // GetByTaskID mocks base method.
-func (m *MockFileService) GetByTaskID(taskID uint) (*[]models.Files, error) {
+func (m *MockFileService) GetByTaskID(taskID uint) ([]models.Files, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByTaskID", taskID)
-	ret0, _ := ret[0].(*[]models.Files)
+	ret0, _ := ret[0].([]models.Files)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

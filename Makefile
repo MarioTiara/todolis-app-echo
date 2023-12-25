@@ -19,14 +19,6 @@ migration_status:
 migration_fix:
 	migrate -path migrations -database "postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable" force 9
 
-atlas-migration:
-	atlas migrate diff --env gorm 
-
-atlas-push-migration:
-	atlas migrate push app --dev-url "docker://postgres/15/dev?search_path=public"
-
-atlas-apply-migration:
-	atlas migrate apply --dir "atlas://app"  --url "postgres://root:secret@:5432/todolistwebapi?search_path=public&sslmode=disable"
 
 #===================#
 #== Env Variables ==#

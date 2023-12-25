@@ -140,16 +140,16 @@ func (mr *MockTaskServiceMockRecorder) FindSubTaskByTaskID(title, description, p
 }
 
 // Update mocks base method.
-func (m *MockTaskService) Update(task dtos.AddTaskRequest, id uint) (models.Task, error) {
+func (m *MockTaskService) Update(task dtos.UpdateTaskRequest) (models.Task, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", task, id)
+	ret := m.ctrl.Call(m, "Update", task)
 	ret0, _ := ret[0].(models.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockTaskServiceMockRecorder) Update(task, id interface{}) *gomock.Call {
+func (mr *MockTaskServiceMockRecorder) Update(task interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockTaskService)(nil).Update), task, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockTaskService)(nil).Update), task)
 }

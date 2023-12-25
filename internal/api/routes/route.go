@@ -6,9 +6,6 @@ import (
 )
 
 func SetRoutes(g *echo.Group, handler *handlers.Handler) {
-	//handler := handlers.NewHandlers(s)
-	// g := e.Group("g")
-	//g.GET("/", handler.Accessible)
 
 	g.GET("/tasks", handler.GetAllList)
 	g.GET("/tasks/:id", handler.GetTaskByIDHandler)

@@ -11,13 +11,13 @@ import (
 func (h *Handler) DeleteTask(c echo.Context) error {
 	strID := c.Param("id")
 	id, err := strconv.ParseUint(strID, 10, 64)
-	if err != nil {
+	if err != nil || strID == "" {
 		return c.JSON(400, map[string]interface{}{"error": "Invalid Input"})
 	}
 
 	err = h.service.TaskService().Delete(uint(id))
 	if err != nil {
-		return c.JSON(500, map[string]interface{}{"error": "Failed to  delete Task"})
+		return c.JSON(500, map[string]interface{}{"error": "Failed to delete Task"})
 	}
 	err = h.service.FileService().DeleteByTaskID(uint(id))
 	if err != nil {
