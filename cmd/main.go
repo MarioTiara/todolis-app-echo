@@ -1,24 +1,22 @@
 package main
 
 import (
-	"github.com/marioTiara/todolistapp/config"
-	"github.com/marioTiara/todolistapp/internal/api/services"
-	"github.com/marioTiara/todolistapp/internal/platform/database"
-	"github.com/marioTiara/todolistapp/internal/platform/server"
-	"github.com/marioTiara/todolistapp/internal/platform/storages"
-	"github.com/marioTiara/todolistapp/internal/repository"
+	"github.com/marioTiara/todolistapi/api"
+	config "github.com/marioTiara/todolistapi/configs"
+	"github.com/marioTiara/todolistapi/internal/app/repository"
+	"github.com/marioTiara/todolistapi/internal/app/services"
+	"github.com/marioTiara/todolistapi/internal/app/storages"
 )
 
 func main() {
 	configuration, _ := config.LoadConfig("../config")
-	postgress := database.NewPostGressDB(configuration)
+	postgress := repository.NewPostGressDB(configuration.DbSource)
 	store := storages.NewLocalStoarge("../uploads")
 	uow := repository.NewUnitOfWork(postgress.GetDB())
 	service := services.NewServices(uow, store)
 
-	server, _ := server.NewServer(configuration, service)
+	server, _ := api.NewServer(configuration, service)
 	server.UseJWT()
 	server.SetRoutes()
 	server.Start()
-
 }

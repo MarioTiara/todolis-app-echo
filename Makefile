@@ -31,7 +31,7 @@ DOCKER_COMPOSE_FILE ?= docker-compose.yml
 #========================#
 
 docker-db-migration-up:
-	$ docker run -v /Users/mpratama/Documents/Coding/Personal/GOLANG/todolistapp/internal/platform/database/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable  up
+	$ docker run -v /Users/mpratama/Documents/Coding/Personal/todolistapi/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database postgresql://root:secret@localhost:5432/todolistwebapi?sslmode=disable  up
 
 .PHONY: createdb dropdb atlas-migration atlas-apply-migration docker-db-migration-up
 

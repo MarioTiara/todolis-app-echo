@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/bxcodec/faker/v3"
-	"github.com/marioTiara/todolistapp/internal/api/dtos"
-	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapi/internal/app/dtos"
+	"github.com/marioTiara/todolistapi/internal/app/models"
 )
 
 func GenerateFile() models.Files {

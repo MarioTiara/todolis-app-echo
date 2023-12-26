@@ -2,7 +2,7 @@
 FROM golang:latest
 
 # Set the working directory inside the container
-WORKDIR /go/src/github.com/marioTiara/todolistapp
+WORKDIR /go/src/github.com/marioTiara/todolistapi
 
 # Copy the local package files to the container's working directory
 COPY . .
@@ -11,10 +11,10 @@ COPY . .
 RUN go get -d -v ./...
 
 # Build your Go application
-RUN go build -o todolistapp ./cmd
+RUN go build -o todolistapi ./cmd
 
 # Expose the port on which your application will run
 EXPOSE 8080
 
 # Define the command to run your application
-CMD ["./todolistapp"]
+CMD ["./todolistapi"]
