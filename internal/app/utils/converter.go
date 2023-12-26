@@ -62,9 +62,9 @@ func ConvertSubTaskToSubtaskQueryModel(subTask models.Task) dtos.SubtaskQueryMod
 }
 
 func ConvertRequestToTaskEntity(request dtos.AddTaskRequest) models.Task {
-	newtask := models.Task{Title: request.Title, Description: request.Description}
+	newtask := models.Task{Title: request.Title, Description: request.Description, Priority: request.Priority, IsActive: true}
 	for _, child := range request.Childrens {
-		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description})
+		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description, Priority: child.Priority, IsActive: true})
 	}
 	return newtask
 }

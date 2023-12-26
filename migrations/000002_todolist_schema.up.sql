@@ -1,2 +1,2 @@
 ALTER TABLE tasks
-ADD COLUMN is_active BOOLEAN;
+ADD COLUMN is_active BOOLEAN; 

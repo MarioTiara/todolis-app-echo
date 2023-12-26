@@ -1,2 +1,2 @@
 ALTER TABLE tasks
-ALTER COLUMN checked SET DEFAULT true;
+ALTER COLUMN is_active SET DEFAULT true;
