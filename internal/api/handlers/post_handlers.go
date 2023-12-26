@@ -44,7 +44,10 @@ func (h *Handler) UploadTaskFilesHandler(c echo.Context) error {
 		if !utils.IsValidFileExtension(file) {
 			return c.JSON(http.StatusBadRequest, map[string]interface{}{"error": "file extension should in .text or .pdf"})
 		}
-		data, _ := h.service.FileService().SaveFile(uint(taskID), file)
+		data, err := h.service.FileService().SaveFile(uint(taskID), file)
+		if err != nil {
+			return c.JSON(500, map[string]interface{}{"error": "failed to save file"})
+		}
 		filesDetail = append(filesDetail, data)
 	}
 	return c.JSON(201, map[string]interface{}{"status": "success", "data": filesDetail})

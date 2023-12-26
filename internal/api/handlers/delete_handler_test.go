@@ -1,4 +1,4 @@
-package handlers
+package handlers_test
 
 import (
 	"encoding/json"
@@ -9,6 +9,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/labstack/echo/v4"
+	"github.com/marioTiara/todolistapp/internal/api/handlers"
 	"github.com/marioTiara/todolistapp/mocks"
 	"github.com/stretchr/testify/assert"
 )
@@ -105,8 +106,8 @@ func TestDeleteTask(t *testing.T) {
 			tc.mockSetup(mockService, mockTaskService, mockFileService)
 
 			//Instantiate handlers
-			handlers := NewHandlers(mockService)
-			e.DELETE("/tasks/:id", handlers.DeleteTask)
+			handler := handlers.NewHandlers(mockService)
+			e.DELETE("/tasks/:id", handler.DeleteTask)
 			tc.setRequest(e)
 			//Act
 			e.ServeHTTP(rec, req)
@@ -120,5 +121,87 @@ func TestDeleteTask(t *testing.T) {
 			}
 		})
 	}
+}
 
+func TestDeleteFile(t *testing.T) {
+	testCases := []struct {
+		name               string
+		mockSetup          func(mockService *mocks.MockService, mockFileService *mocks.MockFileService)
+		setRequest         func(e *echo.Echo) *http.Request
+		expectedResponse   int
+		expectedResultBody errorResult
+	}{
+		{
+			name: "Eror: Invalid Input",
+			setRequest: func(e *echo.Echo) *http.Request {
+				req := httptest.NewRequest(http.MethodDelete, "/files/a", nil)
+				return req
+			},
+			mockSetup:        func(mockService *mocks.MockService, mockFileService *mocks.MockFileService) {},
+			expectedResponse: 400,
+			expectedResultBody: errorResult{
+				Error: "Invalid input",
+			},
+		},
+		{
+			name: "Eror: Failed to delete file",
+			mockSetup: func(mockService *mocks.MockService, mockFileService *mocks.MockFileService) {
+				mockFileService.EXPECT().DeleteByID(gomock.Any()).Return(errors.New("mock error"))
+				mockService.EXPECT().FileService().Return(mockFileService)
+			},
+			setRequest: func(e *echo.Echo) *http.Request {
+				req := httptest.NewRequest(http.MethodDelete, "/files/123", nil)
+				return req
+			},
+			expectedResponse: 500,
+			expectedResultBody: errorResult{
+				Error: "Failed to delete file",
+			},
+		},
+		{
+			name: "Success: No content",
+			mockSetup: func(mockService *mocks.MockService, mockFileService *mocks.MockFileService) {
+				mockFileService.EXPECT().DeleteByID(gomock.Any()).Return(nil)
+				mockService.EXPECT().FileService().Return(mockFileService)
+			},
+			setRequest: func(e *echo.Echo) *http.Request {
+				req := httptest.NewRequest(http.MethodDelete, "/files/123", nil)
+				return req
+			},
+			expectedResponse: http.StatusNoContent,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			ctr := gomock.NewController(t)
+			defer ctr.Finish()
+
+			e := echo.New()
+			req := tc.setRequest(e)
+			rec := httptest.NewRecorder()
+
+			//Instantiate mocks
+			mockServcie := mocks.NewMockService(ctr)
+			mockFileService := mocks.NewMockFileService(ctr)
+			tc.mockSetup(mockServcie, mockFileService)
+
+			//Instantiate handlers
+			handler := handlers.NewHandlers(mockServcie)
+			e.DELETE("/files/:id", handler.DeleteFile)
+			tc.setRequest(e)
+
+			//Act
+			e.ServeHTTP(rec, req)
+
+			//Assert
+			assert.Equal(t, tc.expectedResponse, rec.Code)
+			if tc.expectedResponse != http.StatusNoContent {
+				var Error errorResult
+				json.Unmarshal(rec.Body.Bytes(), &Error)
+				assert.Equal(t, tc.expectedResultBody, Error)
+			}
+
+		})
+	}
 }

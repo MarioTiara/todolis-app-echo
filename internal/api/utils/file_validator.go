@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var allowedExtensions = []string{".text", ".pdf"}
+var allowedExtensions = []string{".text", ".pdf", ".txt"}
 
 func IsValidFileExtension(file *multipart.FileHeader) bool {
 

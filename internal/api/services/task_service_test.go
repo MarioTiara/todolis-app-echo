@@ -1,4 +1,4 @@
-package services
+package services_test
 
 import (
 	"errors"
@@ -8,6 +8,7 @@ import (
 	datafake "github.com/marioTiara/todolistapp/data-fake"
 	"github.com/marioTiara/todolistapp/internal/api/dtos"
 	"github.com/marioTiara/todolistapp/internal/api/models"
+	"github.com/marioTiara/todolistapp/internal/api/services"
 	"github.com/marioTiara/todolistapp/internal/api/utils"
 	"github.com/marioTiara/todolistapp/mocks"
 	"github.com/stretchr/testify/assert"
@@ -22,7 +23,7 @@ func TestNewTaskService(t *testing.T) {
 	mock_store := mocks.NewMockStorage(ctr)
 
 	//Act
-	service := NewTaskService(mock_uow, mock_store)
+	service := services.NewTaskService(mock_uow, mock_store)
 
 	//Assert
 	assert.NotNil(t, service)
@@ -77,7 +78,7 @@ func TestFindAll(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.FindAll()
@@ -136,7 +137,7 @@ func TestFindByID(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.FindByID(1, true)
@@ -206,7 +207,7 @@ func TestFindSubTaskByTaskID(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.FindSubTaskByTaskID("title", "desc", 1, 1, 10)
@@ -278,7 +279,7 @@ func TestCreate(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.Create(addTaskRequest)
@@ -339,7 +340,7 @@ func TestCreateSubTask(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.CreateSubTask(subTaskRequest)
@@ -395,7 +396,7 @@ func TestDelete(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			err := taskService.Delete(1)
@@ -464,7 +465,7 @@ func TestUpdate(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.Update(updateRequest)
@@ -544,7 +545,7 @@ func TestFilterTask(t *testing.T) {
 			tc.mockSetup(mock_repo, mock_uow)
 
 			//Create Task Service Instance
-			taskService := NewTaskService(mock_uow, mock_store)
+			taskService := services.NewTaskService(mock_uow, mock_store)
 
 			//Act
 			result, err := taskService.FilterTask(gomock.Any().String(), gomock.Any().String(),

@@ -15,3 +15,12 @@ CREATE TABLE files (
     file_path VARCHAR(255) NOT NULL,
     FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
 );
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50),
+    name VARCHAR(150),
+    email VARCHAR(150),
+    createdAt timestamptz DEFAULT now(),
+    password VARCHAR (250)
+)

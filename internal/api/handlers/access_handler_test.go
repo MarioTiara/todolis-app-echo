@@ -1,4 +1,4 @@
-package handlers
+package handlers_test
 
 import (
 	"net/http"
@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/marioTiara/todolistapp/internal/api/handlers"
 	"github.com/marioTiara/todolistapp/mocks"
 )
 
@@ -25,8 +26,8 @@ func TestLogin(t *testing.T) {
 			name: "StatusOK login success",
 			setRequest: func(e *echo.Echo) *http.Request {
 				f := make(url.Values)
-				f.Set("username", "jon")
-				f.Set("password", "shhh!")
+				f.Set("username", "mario")
+				f.Set("password", "mario2023")
 
 				req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(f.Encode()))
 				req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationForm)
@@ -67,7 +68,7 @@ func TestLogin(t *testing.T) {
 			mockService := mocks.NewMockService(ctr)
 
 			//Instantiate hanlders
-			handler := NewHandlers(mockService)
+			handler := handlers.NewHandlers(mockService)
 
 			//Act
 			err := handler.Login(c)

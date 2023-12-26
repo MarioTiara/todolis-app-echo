@@ -136,3 +136,56 @@ func GenerateUpdateTaskRequest() dtos.UpdateTaskRequest {
 
 	return request
 }
+
+func GenerateFileQueryModel() dtos.FileQueryModel {
+	rand, _ := faker.RandomInt(50, 500)
+	model := dtos.FileQueryModel{
+		ID:           uint(rand[0]),
+		FileName:     faker.Sentence(),
+		FileSize:     uint(rand[1]),
+		FileURL:      faker.URL(),
+		UploadedTime: time.Now().UTC(),
+	}
+
+	return model
+}
+
+func GenerateSubTaskQueryModel() dtos.SubtaskQueryModel {
+	rand, _ := faker.RandomInt(50, 500)
+	model := dtos.SubtaskQueryModel{
+		ID:          uint(rand[0]),
+		Title:       faker.Sentence(),
+		Description: faker.Sentence(),
+		CreatedAt:   time.Now().UTC(),
+		UpdatedAt:   time.Now().UTC(),
+		Priority:    1,
+		Checked:     false,
+		IsActive:    true,
+		ParentID:    1,
+	}
+
+	for i := 0; i < 3; i++ {
+		model.Files = append(model.Files, GenerateFileQueryModel())
+	}
+	return model
+}
+
+func GenerateTaskQueryModel() dtos.TaskQueryModel {
+	rand, _ := faker.RandomInt(50, 500)
+	model := dtos.TaskQueryModel{
+		ID:          uint(rand[0]),
+		Title:       faker.Sentence(),
+		Description: faker.Sentence(),
+		CreatedAt:   time.Now().UTC(),
+		UpdatedAt:   time.Now().UTC(),
+		Priority:    1,
+		Checked:     false,
+		IsActive:    true,
+	}
+	for i := 0; i < 3; i++ {
+		model.Files = append(model.Files, GenerateFileQueryModel())
+		model.SubTasks = append(model.SubTasks, GenerateSubTaskQueryModel())
+	}
+
+	return model
+}
