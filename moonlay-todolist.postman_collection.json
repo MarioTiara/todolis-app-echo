@@ -1,0 +1,1686 @@
+{
+	"info": {
+		"_postman_id": "58425c00-3694-4c54-aded-e1261fde3f43",
+		"name": "moonlay-todolist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19992744",
+		"_collection_link": "https://crimson-spaceship-648943.postman.co/workspace/My-Workspace~70fcacbe-222b-4de9-853f-c36db5370621/collection/19992744-58425c00-3694-4c54-aded-e1261fde3f43?action=share&source=collection_link&creator=19992744"
+	},
+	"item": [
+		{
+			"name": "1. [METHOD:GET] Menampilkan data all list",
+			"item": [
+				{
+					"name": "[METHOD:GET] Menampilkan data all list [preload=true]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODU0NzcxfQ.goNENIVYOKi1sTX6uMgQw_oVOgyAFvTPDolhou77brc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks?preloadSubTasks=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "preloadSubTasks",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[METHOD:GET] Menampilkan data all list [preload=true]",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?preloadSubTasks=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:00:15 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 4,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            },\n            {\n                \"id\": 5,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            }\n        ]\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 7,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            },\n            {\n                \"id\": 8,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            }\n        ]\n    },\n    {\n        \"id\": 9,\n        \"title\": \"Parent Task 10\",\n        \"description\": \"Parent task 10\",\n        \"created_at\": \"2023-12-01T10:20:28.312092+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 10,\n                \"title\": \"Sub Task 10.1\",\n                \"description\": \"this is sub task 10.1\",\n                \"created_at\": \"2023-12-01T10:20:28.323873+07:00\",\n                \"last_updated\": \"2023-12-01T10:20:28.323873+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 9\n            }\n        ]\n    },\n    {\n        \"id\": 12,\n        \"title\": \"Parent Task 3\",\n        \"description\": \"Belajar react sampai mampus\",\n        \"created_at\": \"2023-12-05T21:48:32.885927+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    }\n]"
+						},
+						{
+							"name": "[METHOD:GET] Menampilkan data all list [preload=true]",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?preloadSubTasks=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:04:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1817"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Belajar Pemrograman\",\n            \"description\": \"memahami konsep dasar pemrograman komputer\",\n            \"created_at\": \"2023-12-26T12:59:41.200305Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": [\n                {\n                    \"id\": 2,\n                    \"title\": \"Belajar C#\",\n                    \"description\": \"memahami konsep dasar C#\",\n                    \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n                    \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n                    \"priority\": 1,\n                    \"checked\": false,\n                    \"is_active\": true,\n                    \"files\": null,\n                    \"parent_id\": 1\n                },\n                {\n                    \"id\": 3,\n                    \"title\": \"Belajar golang pemula\",\n                    \"description\": \"memahami konsep pemrograman golang\",\n                    \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n                    \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n                    \"priority\": 1,\n                    \"checked\": false,\n                    \"is_active\": true,\n                    \"files\": null,\n                    \"parent_id\": 1\n                },\n                {\n                    \"id\": 7,\n                    \"title\": \"Belajar pemrograman python\",\n                    \"description\": \"memahami konsep dasar pemrograman python dan penggunaannya pada pengolahan dara\",\n                    \"created_at\": \"2023-12-26T13:03:44.666885Z\",\n                    \"last_updated\": \"2023-12-26T13:03:44.666885Z\",\n                    \"priority\": 0,\n                    \"checked\": false,\n                    \"is_active\": false,\n                    \"files\": null,\n                    \"parent_id\": 1\n                }\n            ]\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Belajar Bahasa Asing\",\n            \"description\": \"memahami teknik belajar bahasa asing\",\n            \"created_at\": \"2023-12-26T13:01:04.84925Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        },\n        {\n            \"id\": 5,\n            \"title\": \"Belajar Trading saham\",\n            \"description\": \"memahami teknik jual beli di pasar saham\",\n            \"created_at\": \"2023-12-26T13:01:56.659311Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        },\n        {\n            \"id\": 6,\n            \"title\": \"Belajar data science\",\n            \"description\": \"memahami dasar-dasar pengolahan data\",\n            \"created_at\": \"2023-12-26T13:03:31.129181Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "[METHOD:GET] Menampilkan data all list [preload=false]",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzMDQwNjYzfQ.GUk0z27nOEpC_yh15Aajz3hTJkeCQkcIlWJ52r36M_U"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/v1/restricted/tasks"
+					},
+					"response": [
+						{
+							"name": "[METHOD:GET] Menampilkan data all list [preload=false]",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/v1/restricted/tasks"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:01:01 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 9,\n        \"title\": \"Parent Task 10\",\n        \"description\": \"Parent task 10\",\n        \"created_at\": \"2023-12-01T10:20:28.312092+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 12,\n        \"title\": \"Parent Task 3\",\n        \"description\": \"Belajar react sampai mampus\",\n        \"created_at\": \"2023-12-05T21:48:32.885927+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 13,\n        \"title\": \"Learnig golang\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-08T09:25:33.555511+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 14,\n        \"title\": \"Learnig golang advance level\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-08T09:28:47.24873+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 15,\n        \"title\": \"Learnig golang advance level 2\",\n        \"description\": \"implement SOLID in go 2\",\n        \"created_at\": \"2023-12-08T09:29:18.308431+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 1,\n        \"title\": \"Dotnet Unit test\",\n        \"description\": \"Belajar unit test dengan Xunit\",\n        \"created_at\": \"2023-12-01T09:53:16.688964+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 16,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-09T15:11:42.971041+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 17,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-09T20:51:55.592627+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "preload=false & pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODU0NzcxfQ.goNENIVYOKi1sTX6uMgQw_oVOgyAFvTPDolhou77brc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "preload=false & pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "25"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:01:33 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 9,\n        \"title\": \"Parent Task 10\",\n        \"description\": \"Parent task 10\",\n        \"created_at\": \"2023-12-01T10:20:28.312092+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 12,\n        \"title\": \"Parent Task 3\",\n        \"description\": \"Belajar react sampai mampus\",\n        \"created_at\": \"2023-12-05T21:48:32.885927+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 13,\n        \"title\": \"Learnig golang\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-08T09:25:33.555511+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 14,\n        \"title\": \"Learnig golang advance level\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-08T09:28:47.24873+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 15,\n        \"title\": \"Learnig golang advance level 2\",\n        \"description\": \"implement SOLID in go 2\",\n        \"created_at\": \"2023-12-08T09:29:18.308431+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 1,\n        \"title\": \"Dotnet Unit test\",\n        \"description\": \"Belajar unit test dengan Xunit\",\n        \"created_at\": \"2023-12-01T09:53:16.688964+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 16,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-09T15:11:42.971041+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 17,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-09T20:51:55.592627+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    },\n    {\n        \"id\": 18,\n        \"title\": \"\",\n        \"description\": \"\",\n        \"created_at\": \"2023-12-09T20:55:11.465719+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": null\n    }\n]"
+						},
+						{
+							"name": "preload=false & pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:05:29 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "786"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"title\": \"Belajar Pemrograman\",\n            \"description\": \"memahami konsep dasar pemrograman komputer\",\n            \"created_at\": \"2023-12-26T12:59:41.200305Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Belajar Bahasa Asing\",\n            \"description\": \"memahami teknik belajar bahasa asing\",\n            \"created_at\": \"2023-12-26T13:01:04.84925Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        },\n        {\n            \"id\": 5,\n            \"title\": \"Belajar Trading saham\",\n            \"description\": \"memahami teknik jual beli di pasar saham\",\n            \"created_at\": \"2023-12-26T13:01:56.659311Z\",\n            \"last_updated\": \"0001-01-01T00:00:00Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"SubTasks\": null\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Preload=true & pagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "preloadSubTasks",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Preload=true & pagination",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										},
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:01:51 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1421"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 7,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            },\n            {\n                \"id\": 8,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            }\n        ]\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 4,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            },\n            {\n                \"id\": 5,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "preload=true & pagination & title filter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true&title=Parent Task 2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "preloadSubTasks",
+									"value": "true"
+								},
+								{
+									"key": "title",
+									"value": "Parent Task 2"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "preload=true & pagination & title filter",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true&title=Parent Task 2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										},
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										},
+										{
+											"key": "title",
+											"value": "Parent Task 2"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:02:16 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1421"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 4,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            },\n            {\n                \"id\": 5,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            }\n        ]\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 7,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            },\n            {\n                \"id\": 8,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "preload=true & pagination filter (title, description)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true&title=Parent Task 2&description=this is parent task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "preloadSubTasks",
+									"value": "true"
+								},
+								{
+									"key": "title",
+									"value": "Parent Task 2"
+								},
+								{
+									"key": "description",
+									"value": "this is parent task"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "preload=true & pagination filter (title, description)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks?page=1&pageSize=5&preloadSubTasks=true&title=Parent Task 2&description=this is parent task",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										},
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										},
+										{
+											"key": "title",
+											"value": "Parent Task 2"
+										},
+										{
+											"key": "description",
+											"value": "this is parent task"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:02:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1421"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T09:54:58.629563+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 4,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            },\n            {\n                \"id\": 5,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 3\n            }\n        ]\n    },\n    {\n        \"id\": 6,\n        \"title\": \"Parent Task 2\",\n        \"description\": \"this is parent task\",\n        \"created_at\": \"2023-12-01T10:19:29.37655+07:00\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 7,\n                \"title\": \"Child Task 1\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            },\n            {\n                \"id\": 8,\n                \"title\": \"Child Task 2\",\n                \"description\": \"this is parent children\",\n                \"created_at\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"last_updated\": \"2023-12-01T10:19:29.384538+07:00\",\n                \"priority\": 0,\n                \"checked\": true,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 6\n            }\n        ]\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "2. [METHOD:GET] Menampilkan data detail list by list id",
+			"item": [
+				{
+					"name": "preload=true",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/tasks/1?preloadSubTasks=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"tasks",
+								"1"
+							],
+							"query": [
+								{
+									"key": "preloadSubTasks",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "preload=true",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks/1?preloadSubTasks=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks",
+										"1"
+									],
+									"query": [
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:04:33 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2002"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"title\": \"Dotnet Unit test\",\n    \"description\": \"Belajar unit test dengan Xunit\",\n    \"created_at\": \"2023-12-01T09:53:16.688964+07:00\",\n    \"last_updated\": \"0001-01-01T00:00:00Z\",\n    \"priority\": 0,\n    \"checked\": true,\n    \"is_active\": true,\n    \"files\": [\n        {\n            \"id\": 1,\n            \"file_name\": \"3RCOQaFe5L-removed.png\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 2,\n            \"file_name\": \"RxKFpYluiE-WhatsApp Image 2023-11-11 at 23.32.22.jpeg\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 21,\n            \"file_name\": \"0uyhKWLwjC-removed.png\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 22,\n            \"file_name\": \"tA1Uoy1JHq-WhatsApp Image 2023-11-11 at 23.32.22.jpeg\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 23,\n            \"file_name\": \"wEtttnWRZE-removed.png\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 24,\n            \"file_name\": \"52pxnk07pH-WhatsApp Image 2023-11-11 at 23.32.22.jpeg\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 25,\n            \"file_name\": \"tndfCsf4ZT-removed.png\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 26,\n            \"file_name\": \"oJV4b4vN5t-WhatsApp Image 2023-11-11 at 23.32.22.jpeg\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 27,\n            \"file_name\": \"fSZkaE1tNX-removed.png\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 28,\n            \"file_name\": \"GSxwmxjKmF-WhatsApp Image 2023-11-11 at 23.32.22.jpeg\",\n            \"file_size\": 0,\n            \"file_url\": \"\",\n            \"uploaded_time\": \"2023-12-11T07:06:26.45703+07:00\"\n        },\n        {\n            \"id\": 29,\n            \"file_name\": \"6NFssDAv96-download.jpeg\",\n            \"file_size\": 3831,\n            \"file_url\": \"uploads/6NFssDAv96-download.jpeg\",\n            \"uploaded_time\": \"2023-12-11T10:44:29.000569+07:00\"\n        },\n        {\n            \"id\": 30,\n            \"file_name\": \"RXOshvoUTH-Melhores-Fotos-Espaciais.webp\",\n            \"file_size\": 60764,\n            \"file_url\": \"uploads/RXOshvoUTH-Melhores-Fotos-Espaciais.webp\",\n            \"uploaded_time\": \"2023-12-11T10:44:29.017441+07:00\"\n        }\n    ],\n    \"SubTasks\": null\n}"
+						},
+						{
+							"name": "preload=true",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/tasks/1?preloadSubTasks=true",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"tasks",
+										"1"
+									],
+									"query": [
+										{
+											"key": "preloadSubTasks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:07:12 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "760"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Belajar Pemrograman\",\n        \"description\": \"memahami konsep dasar pemrograman komputer\",\n        \"created_at\": \"2023-12-26T12:59:41.200305Z\",\n        \"last_updated\": \"0001-01-01T00:00:00Z\",\n        \"priority\": 1,\n        \"checked\": false,\n        \"is_active\": true,\n        \"files\": null,\n        \"SubTasks\": [\n            {\n                \"id\": 2,\n                \"title\": \"Belajar C#\",\n                \"description\": \"memahami konsep dasar C#\",\n                \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n                \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n                \"priority\": 1,\n                \"checked\": false,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 1\n            },\n            {\n                \"id\": 3,\n                \"title\": \"Belajar golang pemula\",\n                \"description\": \"memahami konsep pemrograman golang\",\n                \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n                \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n                \"priority\": 1,\n                \"checked\": false,\n                \"is_active\": true,\n                \"files\": null,\n                \"parent_id\": 1\n            }\n        ]\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "3. [METHOD:GET] Menampilkan data all sub list by list id",
+			"item": [
+				{
+					"name": "Get all; default pagination; no filter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODU0NzcxfQ.goNENIVYOKi1sTX6uMgQw_oVOgyAFvTPDolhou77brc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/v1/restricted/subtask/1"
+					},
+					"response": [
+						{
+							"name": "Get all; default pagination; no filter",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8080/v1/restricted/subTask/3"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:04:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "486"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 4,\n        \"title\": \"Child Task 1\",\n        \"description\": \"this is parent children\",\n        \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"parent_id\": 3\n    },\n    {\n        \"id\": 5,\n        \"title\": \"Child Task 2\",\n        \"description\": \"this is parent children\",\n        \"created_at\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"last_updated\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"priority\": 0,\n        \"checked\": true,\n        \"is_active\": true,\n        \"files\": null,\n        \"parent_id\": 3\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get all; default pagination; filter (title)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODU0NzcxfQ.goNENIVYOKi1sTX6uMgQw_oVOgyAFvTPDolhou77brc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/subtask/1?title=Belajar C#",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"subtask",
+								"1"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Belajar C"
+								}
+							],
+							"hash": ""
+						}
+					},
+					"response": [
+						{
+							"name": "Get all; default pagination; filter (title)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/subTask/3?title=Child Task 1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"subTask",
+										"3"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Child Task 1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Dec 2023 03:12:59 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "210"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"ID\": 4,\n        \"Title\": \"Child Task 1\",\n        \"Description\": \"this is parent children\",\n        \"CreatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"UpdatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"ParentID\": 3,\n        \"Children\": null,\n        \"Files\": null\n    }\n]"
+						},
+						{
+							"name": "Get all; default pagination; filter (title)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/subtask/1?title=Belajar C#",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"subtask",
+										"1"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Belajar C"
+										}
+									],
+									"hash": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:08:38 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"Belajar C#\",\n            \"description\": \"memahami konsep dasar C#\",\n            \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n            \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"parent_id\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all; default pagination; filter (description)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/subTask/3?description=this is parent children",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"subTask",
+								"3"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "this is parent children"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all; default pagination; filter (title)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/subTask/3?title=Child Task 1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"subTask",
+										"3"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Child Task 1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Dec 2023 03:12:59 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "210"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"ID\": 4,\n        \"Title\": \"Child Task 1\",\n        \"Description\": \"this is parent children\",\n        \"CreatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"UpdatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"ParentID\": 3,\n        \"Children\": null,\n        \"Files\": null\n    }\n]"
+						},
+						{
+							"name": "Get all; default pagination; filter (description)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/subTask/3?description=this is parent children",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"subTask",
+										"3"
+									],
+									"query": [
+										{
+											"key": "description",
+											"value": "this is parent children"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Dec 2023 03:19:48 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "418"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"ID\": 4,\n        \"Title\": \"Child Task 1\",\n        \"Description\": \"this is parent children\",\n        \"CreatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"UpdatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"ParentID\": 3,\n        \"Children\": null,\n        \"Files\": null\n    },\n    {\n        \"ID\": 5,\n        \"Title\": \"Child Task 2\",\n        \"Description\": \"this is parent children\",\n        \"CreatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"UpdatedAt\": \"2023-12-01T09:54:58.635239+07:00\",\n        \"ParentID\": 3,\n        \"Children\": null,\n        \"Files\": null\n    }\n]"
+						},
+						{
+							"name": "Get all; default pagination; filter (description)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/restricted/subtask/1?description=memahami konsep dasar C#",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"restricted",
+										"subtask",
+										"1"
+									],
+									"query": [
+										{
+											"key": "description",
+											"value": "memahami konsep dasar C"
+										}
+									],
+									"hash": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:09:34 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"Belajar C#\",\n            \"description\": \"memahami konsep dasar C#\",\n            \"created_at\": \"2023-12-26T12:59:41.21273Z\",\n            \"last_updated\": \"2023-12-26T12:59:41.21273Z\",\n            \"priority\": 1,\n            \"checked\": false,\n            \"is_active\": true,\n            \"files\": null,\n            \"parent_id\": 1\n        }\n    ],\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "7. [METHOD:POST/PUT] Mengubah data list/sub list dengan kritera input diatas",
+			"item": [
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAyNzY4MTIyfQ.BBLiakqPmWko6QWKeL5IY_kuvdhvVyDHbAW95wnCd4A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1,\n    \"title\":\"Dotnet Unit test\",\n    \"description\":\"Belajar unit test dengan Xunit\",\n    \"priority\":3,\n    \"checked\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/v1/restricted/tasks"
+					},
+					"response": [
+						{
+							"name": "post-task Copy",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Dotnet Unit test\",\n    \"description\":\"Belajar unit test dengan Xunit\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/v1/tasks/1"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 08 Dec 2023 03:42:23 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "217"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ID\": 1,\n    \"Title\": \"Dotnet Unit test\",\n    \"Description\": \"Belajar unit test dengan Xunit\",\n    \"CreatedAt\": \"2023-12-01T09:53:16.688964+07:00\",\n    \"UpdatedAt\": \"2023-12-08T03:42:23.943307Z\",\n    \"ParentID\": null,\n    \"Children\": null,\n    \"Files\": null\n}"
+						},
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\":2,\n    \"title\":\"Dotnet Unit test\",\n    \"description\":\"Belajar unit test dengan Xunit\",\n    \"priority\":3,\n    \"checked\":false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/v1/restricted/tasks"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:14:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"2 updated\",\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "uploads/add",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzMDQwNjYzfQ.GUk0z27nOEpC_yh15Aajz3hTJkeCQkcIlWJ52r36M_U"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/Users/mpratama/Downloads/download.pdf"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/Users/mpratama/Downloads/image001.pdf"
+								},
+								{
+									"key": "taskID",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8080/v1/restricted/uploads/add",
+						"description": "Upload multiple files for a specific taskID"
+					},
+					"response": [
+						{
+							"name": "uploads/add",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/mpratama/Downloads/Melhores-Fotos-Espaciais.webp"
+										},
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/mpratama/Downloads/download.jpeg"
+										},
+										{
+											"key": "taskID",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:8080/v1/restricted/uploads/add"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:19:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "361"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 39,\n        \"file_name\": \"1QLNtbxCOo-Melhores-Fotos-Espaciais.webp\",\n        \"file_size\": 60764,\n        \"file_url\": \"uploads/1QLNtbxCOo-Melhores-Fotos-Espaciais.webp\",\n        \"uploaded_time\": \"2023-12-14T09:19:49.534964+07:00\"\n    },\n    {\n        \"id\": 40,\n        \"file_name\": \"8cnxRMSU5r-download.jpeg\",\n        \"file_size\": 3831,\n        \"file_url\": \"uploads/8cnxRMSU5r-download.jpeg\",\n        \"uploaded_time\": \"2023-12-14T09:19:49.553535+07:00\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "uploads/get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzMDQwNjYzfQ.GUk0z27nOEpC_yh15Aajz3hTJkeCQkcIlWJ52r36M_U"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/Users/mpratama/Downloads/download.jpeg"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/Users/mpratama/Downloads/Melhores-Fotos-Espaciais.webp"
+								},
+								{
+									"key": "taskID",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/restricted/uploads/get?fileName=E5gAKdgEQZ-download.pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restricted",
+								"uploads",
+								"get"
+							],
+							"query": [
+								{
+									"key": "fileName",
+									"value": "E5gAKdgEQZ-download.pdf"
+								}
+							]
+						},
+						"description": "Upload multiple files for a specific taskID"
+					},
+					"response": [
+						{
+							"name": "uploads/add",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/mpratama/Downloads/Melhores-Fotos-Espaciais.webp"
+										},
+										{
+											"key": "files",
+											"type": "file",
+											"src": "/Users/mpratama/Downloads/download.jpeg"
+										},
+										{
+											"key": "taskID",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:8080/v1/restricted/uploads/add"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 14 Dec 2023 02:19:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "361"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 39,\n        \"file_name\": \"1QLNtbxCOo-Melhores-Fotos-Espaciais.webp\",\n        \"file_size\": 60764,\n        \"file_url\": \"uploads/1QLNtbxCOo-Melhores-Fotos-Espaciais.webp\",\n        \"uploaded_time\": \"2023-12-14T09:19:49.534964+07:00\"\n    },\n    {\n        \"id\": 40,\n        \"file_name\": \"8cnxRMSU5r-download.jpeg\",\n        \"file_size\": 3831,\n        \"file_url\": \"uploads/8cnxRMSU5r-download.jpeg\",\n        \"uploaded_time\": \"2023-12-14T09:19:49.553535+07:00\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "5. [METHOD:POST] Menambahkan data list.",
+			"item": [
+				{
+					"name": "post-task",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var data= {",
+									"    title:\"Parent Task 3\",",
+									"    description:\"Belajar react sampai mampus\"",
+									"}",
+									"",
+									"pm.variables.set(\"jsonData\", JSON.stringify(data));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODU0NzcxfQ.goNENIVYOKi1sTX6uMgQw_oVOgyAFvTPDolhou77brc"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Belajar data science\",\n    \"description\":\"memahami dasar-dasar pengolahan data\",\n    \"priority\":1   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/v1/restricted/tasks"
+					},
+					"response": [
+						{
+							"name": "post-task",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Belajar Pemrograman\",\n    \"description\":\"memahami konsep dasar pemrograman komputer\",\n    \"priority\":1,\n    \"childrens\":[\n        {\n            \"title\":\"Belajar C#\",\n             \"description\":\"memahami konsep dasar C#\",\n             \"priority\":1\n        },\n        {\n            \"title\":\"Belajar golang pemula\",\n             \"description\":\"memahami konsep pemrograman golang\",\n             \"priority\":1\n        }\n    ]\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/v1/restricted/tasks"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 12:59:41 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "841"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Belajar Pemrograman\",\n        \"description\": \"memahami konsep dasar pemrograman komputer\",\n        \"created_at\": \"2023-12-26T12:59:41.200305213Z\",\n        \"last_updated\": \"2023-12-26T12:59:41.200305213Z\",\n        \"priority\": 1,\n        \"checked\": false,\n        \"is_active\": true,\n        \"parent_id\": null,\n        \"sub_tasks\": [\n            {\n                \"id\": 2,\n                \"title\": \"Belajar C#\",\n                \"description\": \"memahami konsep dasar C#\",\n                \"created_at\": \"2023-12-26T12:59:41.212730671Z\",\n                \"last_updated\": \"2023-12-26T12:59:41.212730671Z\",\n                \"priority\": 1,\n                \"checked\": false,\n                \"is_active\": true,\n                \"parent_id\": 1,\n                \"sub_tasks\": null,\n                \"files\": null\n            },\n            {\n                \"id\": 3,\n                \"title\": \"Belajar golang pemula\",\n                \"description\": \"memahami konsep pemrograman golang\",\n                \"created_at\": \"2023-12-26T12:59:41.212730671Z\",\n                \"last_updated\": \"2023-12-26T12:59:41.212730671Z\",\n                \"priority\": 1,\n                \"checked\": false,\n                \"is_active\": true,\n                \"parent_id\": 1,\n                \"sub_tasks\": null,\n                \"files\": null\n            }\n        ],\n        \"files\": null\n    },\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "6. [METHOD:POST] Menambahkan data sub list untuk spesifik list.",
+			"item": [
+				{
+					"name": "post-task Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var data= {",
+									"    title:\"Parent Task 3\",",
+									"    description:\"Belajar react sampai mampus\"",
+									"}",
+									"",
+									"pm.variables.set(\"jsonData\", JSON.stringify(data));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODUyNDE5fQ.cwts2r0REoFlKf_lkZJkX3tryLeg2fg4RHd19hCb9Xw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Belajar pemrograman python\",\n    \"description\":\"memahami konsep dasar pemrograman python dan penggunaannya pada pengolahan dara\",\n    \"priority\":1,\n    \"parent_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/v1/restricted/subtaks"
+					},
+					"response": [
+						{
+							"name": "post-task",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Belajar Pemrograman\",\n    \"description\":\"memahami konsep dasar pemrograman komputer\",\n    \"priority\":1,\n    \"childrens\":[\n        {\n            \"title\":\"Belajar C#\",\n             \"description\":\"memahami konsep dasar C#\",\n             \"priority\":1\n        },\n        {\n            \"title\":\"Belajar golang pemula\",\n             \"description\":\"memahami konsep pemrograman golang\",\n             \"priority\":1\n        }\n    ]\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/v1/restricted/tasks"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 12:22:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "844"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Belajar Pemrograman\",\n        \"description\": \"memahami konsep dasar pemrograman komputer\",\n        \"created_at\": \"2023-12-26T12:22:14.825208718Z\",\n        \"last_updated\": \"2023-12-26T12:22:14.825208718Z\",\n        \"priority\": 0,\n        \"checked\": false,\n        \"is_active\": false,\n        \"parent_id\": null,\n        \"sub_tasks\": [\n            {\n                \"id\": 2,\n                \"title\": \"Belajar C#\",\n                \"description\": \"memahami konsep dasar C#\",\n                \"created_at\": \"2023-12-26T12:22:14.834940926Z\",\n                \"last_updated\": \"2023-12-26T12:22:14.834940926Z\",\n                \"priority\": 0,\n                \"checked\": false,\n                \"is_active\": false,\n                \"parent_id\": 1,\n                \"sub_tasks\": null,\n                \"files\": null\n            },\n            {\n                \"id\": 3,\n                \"title\": \"Belajar golang pemula\",\n                \"description\": \"memahami konsep pemrograman golang\",\n                \"created_at\": \"2023-12-26T12:22:14.834940926Z\",\n                \"last_updated\": \"2023-12-26T12:22:14.834940926Z\",\n                \"priority\": 0,\n                \"checked\": false,\n                \"is_active\": false,\n                \"parent_id\": 1,\n                \"sub_tasks\": null,\n                \"files\": null\n            }\n        ],\n        \"files\": null\n    },\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "post-task Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Belajar pemrograman python\",\n    \"description\":\"memahami konsep dasar pemrograman python dan penggunaannya pada pengolahan dara\",\n    \"priority\":1,\n    \"parent_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8080/v1/restricted/subtaks"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 Dec 2023 13:03:44 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ID\": 7,\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "8. [METHOD:DELETE] Menghapus data list/sub list.",
+			"item": [
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/v1/tasks/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Access - Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "mario",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "mario2023",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:8080/v1/login"
+			},
+			"response": [
+				{
+					"name": "Access - Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "mario",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "mario2023",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8080/v1/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Dec 2023 12:20:19 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "160"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNzAzODUyNDE5fQ.cwts2r0REoFlKf_lkZJkX3tryLeg2fg4RHd19hCb9Xw\"\n}"
+				}
+			]
+		}
+	]
+}
