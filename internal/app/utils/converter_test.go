@@ -91,9 +91,9 @@ func TestConvertSubTaskToSubtaskQueryModel(t *testing.T) {
 func TestConvertRequestToTaskEntity(t *testing.T) {
 	//Arrange
 	request := datafake.GenerateAddTaskRequest(2)
-	newtask := models.Task{Title: request.Title, Description: request.Description}
+	newtask := models.Task{Title: request.Title, Description: request.Description, IsActive: true, Priority: request.Priority}
 	for _, child := range request.Childrens {
-		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description})
+		newtask.Children = append(newtask.Children, models.Task{Title: child.Title, Description: child.Description, IsActive: true, Priority: child.Priority})
 	}
 
 	//Act
