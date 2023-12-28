@@ -21,7 +21,7 @@ Data Input untuk masing-masing list/sub list :
 
 1. Clone project repository
 ```
-git clone git@github.com:MarioTiara/todolis-app-echo.git
+git clone git@github.com:MarioTiara/todolist-app-echo.git
 ```
 2. Masuk ke project folder
 ```
